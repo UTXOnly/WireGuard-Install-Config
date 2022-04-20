@@ -30,7 +30,7 @@ PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING 
 peer_addition
 cat $load_config >> /etc/wireguard/wg0.conf
 
-sed -i "s/private_key//g" /etc/wireguard/wg0.conf
+sed -i "s/a_private_key/$private_key/g" /etc/wireguard/wg0.conf
 
 
 read -p "What is the public key of the client?" client_pub_key
