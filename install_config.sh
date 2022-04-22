@@ -9,7 +9,7 @@ sleep 5
 
 apt-get install wireguard
 
-sleep 10
+sleep 2
 
 cd /etc/wireguard
 
@@ -20,7 +20,7 @@ umask 077; wg genkey | tee privatekey | wg pubkey > publickey
 systemctl enable wg-quick@wg0
 
 #Populate wg0.conf w/ config and firewall rules to masquerade client traffic from server
-private_key=($
+
 
 load_config="
 [Interface]
@@ -36,7 +36,7 @@ PublicKey =
 "
 
 #Populate begining of config file
-cat $load_config > /etc/wireguard/wg0.conf
+echo "$load_config" > /etc/wireguard/wg0.conf
 
 #Sed script to replace string w/ variable
 sed -i "s/a_private_key/$private_key/g" /etc/wireguard/wg0.conf
@@ -45,7 +45,7 @@ sed -i "s/a_private_key/$private_key/g" /etc/wireguard/wg0.conf
 read -p "What is the public key of the client?" client_pub_key
 
 #Pipe contents of variable to append wg0.conf
-cat $client_pub_key | >> wg0.conf
+echo "$client_pub_key"  >> wg0.conf
 
 #Adjust firewall to allow SSH and wireguardVPN traffic
 ufw allow 22/tcp
