@@ -5,19 +5,22 @@ first_ip_address="$(curl -Ls ifconfig.me)"
 
 echo "Your public IP is: " $first_ip_address
 
-sleep 5
+sleep 3
 
-apt-get install wireguard
+apt-get update
+apt-get install -y wireguard
 
 sleep 2
 
-cd /etc/wireguard
+cd /etc/wireguard/
 
 #Generate public/private keypair 
 umask 077; wg genkey | tee privatekey | wg pubkey > publickey
 
 #Quick enable wg0 interface
 systemctl enable wg-quick@wg0
+
+private_key=$(< privatekey)
 
 #Populate wg0.conf w/ config and firewall rules to masquerade client traffic from server
 
