@@ -26,7 +26,7 @@ umask 077; wg genkey | tee privatekey | wg pubkey > publickey
 wg-quick up wg0
 systemctl enable wg-quick@wg0
 
-private_key=$(< privatekey)
+a_private_key=$(< privatekey)
 
 #Populate wg0.conf w/ config and firewall rules to masquerade client traffic from server
 
