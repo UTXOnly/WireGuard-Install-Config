@@ -23,6 +23,7 @@ cd /etc/wireguard/
 umask 077; wg genkey | tee privatekey | wg pubkey > publickey
 
 #Quick enable wg0 interface
+wg-quick up wg0
 systemctl enable wg-quick@wg0
 
 private_key=$(< privatekey)
