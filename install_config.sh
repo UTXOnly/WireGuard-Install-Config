@@ -1,5 +1,10 @@
 #!/bin/bash
 
+#Enable IPv4 forwarding
+sed '/net.ipv4.ip_forward=1/s/^#//' -i /etc/sysctl.conf
+systemctl -p
+
+
 #Create variable for host's public IP
 first_ip_address="$(curl -Ls ifconfig.me)"
 
