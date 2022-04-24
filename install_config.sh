@@ -48,7 +48,7 @@ PersistentKeepalive = 25
 echo "$load_config" >> /etc/wireguard/wg0.conf
 
 #Sed script to replace string w/ variable
-sed -i "s/a_private_key/$private_key/g" /etc/wireguard/wg0.conf
+sed -i "s/a_private_key/$a_private_key/g" /etc/wireguard/wg0.conf
 
 #Quick enable wg0 interface
 wg-quick up wg0
