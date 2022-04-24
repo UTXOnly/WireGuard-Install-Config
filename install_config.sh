@@ -50,15 +50,16 @@ echo "$load_config" >> /etc/wireguard/wg0.conf
 #Sed script to replace string w/ variable
 sed -i "s/a_private_key/$private_key/g" /etc/wireguard/wg0.conf
 
-#Quick enable wg0 interface
-wg-quick up wg0
-
 
 #Read user input as variable
 read -p "What is the public key of the client?" client_pub_key
 
 #Pipe contents of variable to append wg0.conf
 echo "PublicKey = $client_pub_key"  >> wg0.conf
+
+#Quick enable wg0 interface
+wg-quick up wg0
+
 
 #Adjust firewall to allow SSH and wireguardVPN traffic
 ufw allow 22/tcp
