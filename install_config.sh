@@ -2,7 +2,7 @@
 
 #Enable IPv4 forwarding
 sed '/net.ipv4.ip_forward=1/s/^#//' -i /etc/sysctl.conf
-systemctl -p
+sysctl -p
 
 
 #Create variable for host's public IP
@@ -18,6 +18,7 @@ apt-get install -y wireguard
 sleep 2
 
 cd /etc/wireguard/
+touch /etc/wireguard/wg0.conf
 
 #Generate public/private keypair 
 umask 077; wg genkey | tee privatekey | wg pubkey > publickey
@@ -25,7 +26,9 @@ umask 077; wg genkey | tee privatekey | wg pubkey > publickey
 #Quick enable wg0 interface
 wg-quick up wg0
 systemctl enable wg-quick@wg0
+systemctl start wg-quick@wg0
 
+#Create variable for private key
 a_private_key=$(< privatekey)
 
 #Populate wg0.conf w/ config and firewall rules to masquerade client traffic from server
@@ -41,11 +44,10 @@ PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING 
 [Peer]
 AllowedIPS = 10.0.0.1/24
 PersistentKeepalive = 25
-PublicKey =
 "
 
 #Populate begining of config file
-echo "$load_config" > /etc/wireguard/wg0.conf
+echo "$load_config" >> /etc/wireguard/wg0.conf
 
 #Sed script to replace string w/ variable
 sed -i "s/a_private_key/$private_key/g" /etc/wireguard/wg0.conf
@@ -54,7 +56,7 @@ sed -i "s/a_private_key/$private_key/g" /etc/wireguard/wg0.conf
 read -p "What is the public key of the client?" client_pub_key
 
 #Pipe contents of variable to append wg0.conf
-echo "$client_pub_key"  >> wg0.conf
+echo "PublicKey = $client_pub_key"  >> wg0.conf
 
 #Adjust firewall to allow SSH and wireguardVPN traffic
 ufw allow 22/tcp
