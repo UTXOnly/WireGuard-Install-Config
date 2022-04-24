@@ -23,10 +23,8 @@ touch /etc/wireguard/wg0.conf
 #Generate public/private keypair 
 umask 077; wg genkey | tee privatekey | wg pubkey > publickey
 
-#Quick enable wg0 interface
-wg-quick up wg0
-systemctl enable wg-quick@wg0
-systemctl start wg-quick@wg0
+#systemctl enable wg-quick@wg0
+#systemctl start wg-quick@wg0
 
 #Create variable for private key
 a_private_key=$(< privatekey)
@@ -51,6 +49,10 @@ echo "$load_config" >> /etc/wireguard/wg0.conf
 
 #Sed script to replace string w/ variable
 sed -i "s/a_private_key/$private_key/g" /etc/wireguard/wg0.conf
+
+#Quick enable wg0 interface
+wg-quick up wg0
+
 
 #Read user input as variable
 read -p "What is the public key of the client?" client_pub_key
