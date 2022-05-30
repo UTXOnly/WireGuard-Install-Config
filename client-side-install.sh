@@ -64,7 +64,7 @@ sed -i "s/a_private_key/$private_key/g" /etc/wireguard/wg0.conf
 sed -i "s/WG_server_pubkey/$WG_server_pubkey/g" /etc/wireguard/wg0.conf
 
 #Sed script to replace string w/ variable
-sed -i "s/server_ip/$server_ip/g" /etc/wireguard/wg0-client.conf
+sed -i "s/server_ip/$server_ip/g" /etc/wireguard/wg0.conf
 
 #Quick enable wg0 interface
 wg-quick up wg0
