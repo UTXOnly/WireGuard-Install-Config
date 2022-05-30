@@ -7,19 +7,27 @@ apt-get install -y wireguard
 
 sleep 2
 
-read -p "Paste in your WireGuard server public key" WG_server_pubkey
+read -p "Paste in your WireGuard server public key  :" WG_server_pubkey
 
-sleep 1
+sleep 3
 
-read -p "What is the IP address of your WireGuard server?" server_ip
+read -p "What is the IP address of your WireGuard server?  :" server_ip
 
-sleep 2
+sleep 3
 
-scp root@$server_ip:/etc/wireguard/wg0.conf /etc/wireguard/
+#scp root@$server_ip:/etc/wireguard/wg0.conf /etc/wireguard/
 
-sleep 2
+#sleep 2
 
-cd /etc/wiregaurd 
+#If file does not exisit, create it
+conf_file=/etc/wireguard/wg0.conf
+if [ -f "$conf_file" ]; then
+    echo "$FILE exists."
+else
+	touch /etc/wireguard/wg0.conf_file
+fi
+
+cd /etc/wireguard 
 
 
 umask 077; wg genkey | tee privatekey | wg pubkey > publickey
@@ -30,7 +38,7 @@ cat privatekey
 private_key=$(< privatekey)
 
 # Create conf file
-touch /etc/wiregaurd/wg-client.conf
+touch /etc/wireguard/wg0.conf
 
 
 # input priv key to server
@@ -47,16 +55,16 @@ PrivateKey = a_private_key
  "
 
 #Populate begining of config file
- echo load_config >> /etc/wiregaurd/wg0-client.sh
+ echo load_config >> /etc/wireguard/wg0.conf
 
 #Sed script to replace string w/ variable
-sed -i "s/a_private_key/$private_key/g" /etc/wireguard/wg0-client.conf
+sed -i "s/a_private_key/$private_key/g" /etc/wireguard/wg0.conf
 
 #Sed script to replace string w/ variable
-sed -i "s/WG_server_pubkey/$WG_server_pubkey/g" etc/wireguard/wg0-client.conf
+sed -i "s/WG_server_pubkey/$WG_server_pubkey/g" /etc/wireguard/wg0.conf
 
 #Sed script to replace string w/ variable
-sed -i "s/server_ip/$server_ip/g" etc/wireguard/wg0-client.conf
+sed -i "s/server_ip/$server_ip/g" /etc/wireguard/wg0-client.conf
 
 #Quick enable wg0 interface
 wg-quick up wg0
