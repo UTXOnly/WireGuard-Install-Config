@@ -47,6 +47,8 @@ PersistentKeepalive = 25
 #Populate begining of config file
 echo "$load_config" >> /etc/wireguard/wg0.conf
 
+sleep 2
+
 #Sed script to replace string w/ variable
 sed -i "s/a_private_key/$private_key/g" /etc/wireguard/wg0.conf
 
