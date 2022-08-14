@@ -18,7 +18,7 @@ apt-get install -y wireguard
 sleep 2
 
 cd /etc/wireguard/
-touch /etc/wireguard/wg0.conf
+sudo touch /etc/wireguard/wg0.conf
 
 #Generate public/private keypair 
 umask 077; wg genkey | tee privatekey | wg pubkey > publickey
@@ -45,7 +45,7 @@ PersistentKeepalive = 25
 "
 
 #Populate begining of config file
-echo "$load_config" >> /etc/wireguard/wg0.conf
+sudo echo "$load_config" >> /etc/wireguard/wg0.conf
 
 sleep 2
 
