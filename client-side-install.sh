@@ -33,7 +33,7 @@ fi
 #If file does not exisit, create it
 conf_file=/etc/wireguard/wg0.conf
 if [ -f "$conf_file" ]; then
-    echo "$FILE exists"
+    echo "$conf_file exists"
 else
 	touch /etc/wireguard/wg0.conf_file
     apt-get install -y wireguard

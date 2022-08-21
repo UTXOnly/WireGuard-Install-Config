@@ -8,7 +8,7 @@ USERNAME=wireguard
 
 groupadd -g $GID -o $USERNAME && \
 useradd -m -u $UID -g $GID -o -d /home/$USERNAME -s /bin/bash $USERNAME && \
-echo "$USERNAME    ALL=(ALL:ALL) NOPASSWD: /usr/bin/append-to-hosts" | tee -a /etc/sudoers
+echo "$USERNAME    ALL=(ALL:ALL) NOPASSWD: "| tee -a /etc/sudoers
 
 
 #Enable IPv4 forwarding
@@ -21,11 +21,11 @@ first_ip_address="$(curl -Ls ifconfig.me)"
 
 echo "Your public IP is: " $first_ip_address
 
-apt-get update
+apt-get update -y
 
 conf_file=/etc/wireguard/wg0.conf
 if [ -f "$conf_file" ]; then
-    echo "$FILE exists"
+    echo "$conf_file exists"
 else
 	touch /etc/wireguard/wg0.conf_file
     apt-get install -y wireguard
@@ -37,6 +37,7 @@ fi
 
 cd /etc/wireguard/
 sudo touch /etc/wireguard/wg0.conf
+sudo chmod 777 /etc/wireguard/wg0.conf
 
 #Generate public/private keypair 
 umask 077; wg genkey | tee privatekey | wg pubkey > publickey
