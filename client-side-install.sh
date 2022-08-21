@@ -1,23 +1,25 @@
 #!/bin/bash
 
 #client_ip_address="$(curl -Ls ifconfig.me)"
-
 apt-get update
-apt-get install -y wireguard
+conf_file=/etc/wireguard/wg0.conf
+if [ -f "$conf_file" ]; then
+    echo "$FILE exists"
+    
+else
+	apt-get install -y wireguard
+fi
 
-sleep 2
+#apt-get install -y wireguard
+
+
 
 read -p "Paste in your WireGuard server public key  :" WG_server_pubkey
 
-sleep 3
+
 
 read -p "What is the IP address of your WireGuard server?  :" server_ip
 
-sleep 3
-
-#scp root@$server_ip:/etc/wireguard/wg0.conf /etc/wireguard/
-
-#sleep 2
 
 #If file does not exisit, create it
 conf_file=/etc/wireguard/wg0.conf
@@ -32,7 +34,6 @@ cd /etc/wireguard
 
 umask 077; wg genkey | tee privatekey | wg pubkey > publickey
 
-cat privatekey
 
 #Create variable for private key
 private_key=$(< privatekey)
@@ -42,20 +43,20 @@ touch /etc/wireguard/wg0.conf
 
 
 # input priv key to server
+conf_file=/etc/wireguard/wg0.conf
 
-load_config="[Interface]
+tee >${conf_file} << EOF
+[Interface]
 PrivateKey = a_private_key
- Address=10.0.0.4
+Address=10.0.0.4
 
 [Peer]
-# Ubuntu Digital Ocean Server
- PublicKey=WG_server_pubkey
- Endpoint=server_ip:51820
- AllowedIPs = 0.0.0.0/0 # Forward all traffic to server
- "
-
+PublicKey=WG_server_pubkey
+Endpoint=server_ip:51820
+AllowedIPs = 0.0.0.0/0 # Forward all traffic to server
+EOF
 #Populate begining of config file
- echo load_config >> /etc/wireguard/wg0.conf
+echo load_config >> /etc/wireguard/wg0.conf
 
 #Sed script to replace string w/ variable
 sed -i "s/a_private_key/$private_key/g" /etc/wireguard/wg0.conf
@@ -73,6 +74,16 @@ wg-quick up wg0
 #ssh -t root@$server_ip 'cd /etc/wireguard/wg0.conf;sed -i "s/new_client_private_key/$private_key/g" /etc/wireguard/wg0-client.conf;'
 
 echo "Your traffic is now encrypted"
+echo "
+ __          ___                                    _   _    _ _____  _ 
+ \ \        / (_)                                  | | | |  | |  __ \| |
+  \ \  /\  / / _ _ __ ___  __ _ _   _  __ _ _ __ __| | | |  | | |__) | |
+   \ \/  \/ / | | '__/ _ \/ _` | | | |/ _` | '__/ _` | | |  | |  ___/| |
+    \  /\  /  | | | |  __/ (_| | |_| | (_| | | | (_| | | |__| | |    |_|
+     \/  \/   |_|_|  \___|\__, |\__,_|\__,_|_|  \__,_|  \____/|_|    (_)
+                           __/ |                                        
+                          |___/                                         
+"
 
 
 

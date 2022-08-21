@@ -17,10 +17,10 @@ apt-get update
 
 conf_file=/etc/wireguard/wg0.conf
 if [ -f "$conf_file" ]; then
-    echo "$FILE exists."
-    apt-get install -y wireguard
+    echo "$FILE exists"
 else
 	touch /etc/wireguard/wg0.conf_file
+    apt-get install -y wireguard
 fi
 
 #apt-get install -y wireguard
