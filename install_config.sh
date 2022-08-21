@@ -1,5 +1,7 @@
 #!/bin/bash
 
+$1=client_pub_key
+
 #Enable IPv4 forwarding
 sed '/net.ipv4.ip_forward=1/s/^#//' -i /etc/sysctl.conf
 sysctl -p
@@ -10,12 +12,10 @@ first_ip_address="$(curl -Ls ifconfig.me)"
 
 echo "Your public IP is: " $first_ip_address
 
-sleep 3
 
 apt-get update
 apt-get install -y wireguard
 
-sleep 2
 
 cd /etc/wireguard/
 sudo touch /etc/wireguard/wg0.conf
@@ -23,8 +23,6 @@ sudo touch /etc/wireguard/wg0.conf
 #Generate public/private keypair 
 umask 077; wg genkey | tee privatekey | wg pubkey > publickey
 
-#systemctl enable wg-quick@wg0
-#systemctl start wg-quick@wg0
 
 #Create variable for private key
 private_key=$(< privatekey)
@@ -43,17 +41,13 @@ AllowedIPS = 10.0.0.1/24
 PersistentKeepalive = 25
 EOF
 
-#Populate begining of config file
-#sudo echo "$load_config" >> /etc/wireguard/wg0.conf
-
-sleep 2
 
 #Sed script to replace string w/ variable
 sed -i "s/a_private_key/$private_key/g" /etc/wireguard/wg0.conf
 
 
 #Read user input as variable
-read -p "What is the public key of the client?" client_pub_key
+#read -p "What is the public key of the client?" client_pub_key
 
 #Pipe contents of variable to append wg0.conf
 echo "PublicKey = $client_pub_key"  >> wg0.conf
