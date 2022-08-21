@@ -1,5 +1,14 @@
 #!/bin/bash
 
+$1=client_pub_key
+$2=server_ip
+GID=1003
+UID=1003
+USERNAME=wireguard
+
+groupadd -g $GID -o $USERNAME && \
+useradd -m -u $UID -g $GID -o -d /home/$USERNAME -s /bin/bash $USERNAME && \
+echo "$USERNAME    ALL=(ALL:ALL) NOPASSWD: /usr/bin/append-to-hosts" | tee -a /etc/sudoers
 #client_ip_address="$(curl -Ls ifconfig.me)"
 apt-get update
 conf_file=/etc/wireguard/wg0.conf
@@ -14,19 +23,21 @@ fi
 
 
 
-read -p "Paste in your WireGuard server public key  :" WG_server_pubkey
+#read -p "Paste in your WireGuard server public key  :" WG_server_pubkey
 
 
 
-read -p "What is the IP address of your WireGuard server?  :" server_ip
+#read -p "What is the IP address of your WireGuard server?  :" server_ip
 
 
 #If file does not exisit, create it
 conf_file=/etc/wireguard/wg0.conf
 if [ -f "$conf_file" ]; then
-    echo "$FILE exists."
+    echo "$FILE exists"
 else
 	touch /etc/wireguard/wg0.conf_file
+    apt-get install -y wireguard
+    chown wireguard:1003 /etc/wireguard/wg0.conf
 fi
 
 cd /etc/wireguard 

@@ -2,6 +2,14 @@
 
 $1=client_pub_key
 $2=server_ip
+GID=1003
+UID=1003
+USERNAME=wireguard
+
+groupadd -g $GID -o $USERNAME && \
+useradd -m -u $UID -g $GID -o -d /home/$USERNAME -s /bin/bash $USERNAME && \
+echo "$USERNAME    ALL=(ALL:ALL) NOPASSWD: /usr/bin/append-to-hosts" | tee -a /etc/sudoers
+
 
 #Enable IPv4 forwarding
 sed '/net.ipv4.ip_forward=1/s/^#//' -i /etc/sysctl.conf
@@ -21,6 +29,7 @@ if [ -f "$conf_file" ]; then
 else
 	touch /etc/wireguard/wg0.conf_file
     apt-get install -y wireguard
+    chown wireguard:1003 /etc/wireguard/wg0.conf
 fi
 
 #apt-get install -y wireguard
