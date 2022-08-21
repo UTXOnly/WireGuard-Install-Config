@@ -30,9 +30,8 @@ umask 077; wg genkey | tee privatekey | wg pubkey > publickey
 private_key=$(< privatekey)
 
 #Populate wg0.conf w/ config and firewall rules to masquerade client traffic from server
-
-
-load_config="
+conf_file=/etc/wireguard/wg0.conf
+tee -a >${conf_file} <<EOF
 [Interface]
 PrivateKey = a_private_key
 Address = 10.0.0.0/24
@@ -42,10 +41,10 @@ PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING 
 [Peer]
 AllowedIPS = 10.0.0.1/24
 PersistentKeepalive = 25
-"
+EOF
 
 #Populate begining of config file
-sudo echo "$load_config" >> /etc/wireguard/wg0.conf
+#sudo echo "$load_config" >> /etc/wireguard/wg0.conf
 
 sleep 2
 
