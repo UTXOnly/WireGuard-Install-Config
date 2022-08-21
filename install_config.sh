@@ -1,6 +1,7 @@
 #!/bin/bash
 
 $1=client_pub_key
+$2=server_ip
 
 #Enable IPv4 forwarding
 sed '/net.ipv4.ip_forward=1/s/^#//' -i /etc/sysctl.conf
@@ -12,9 +13,17 @@ first_ip_address="$(curl -Ls ifconfig.me)"
 
 echo "Your public IP is: " $first_ip_address
 
-
 apt-get update
-apt-get install -y wireguard
+
+conf_file=/etc/wireguard/wg0.conf
+if [ -f "$conf_file" ]; then
+    echo "$FILE exists."
+    apt-get install -y wireguard
+else
+	touch /etc/wireguard/wg0.conf_file
+fi
+
+#apt-get install -y wireguard
 
 
 cd /etc/wireguard/
