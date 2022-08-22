@@ -8,7 +8,7 @@ USERNAME=wireguard
 
 groupadd -g $GID -o $USERNAME && \
 useradd -m -u $UID -g $GID -o -d /home/$USERNAME -s /bin/bash $USERNAME && \
-echo "$USERNAME    ALL=(ALL:ALL) NOPASSWD: "| tee -a /etc/sudoers
+echo "$USERNAME    ALL=(ALL:ALL) NOPASSWD: ALL"| tee -a /etc/sudoers
 
 
 #Enable IPv4 forwarding
