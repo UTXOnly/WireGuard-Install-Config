@@ -32,9 +32,6 @@ else
     chown wireguard:1003 /etc/wireguard/wg0.conf
 fi
 
-#apt-get install -y wireguard
-
-
 cd /etc/wireguard/
 sudo touch /etc/wireguard/wg0.conf
 sudo chmod 777 /etc/wireguard/wg0.conf
