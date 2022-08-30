@@ -21,6 +21,8 @@ first_ip_address="$(curl -Ls ifconfig.me)"
 
 echo "Your public IP is: " $first_ip_address
 
+echo "Y"
+
 apt-get update -y
 
 conf_file=/etc/wireguard/wg0.conf
@@ -31,6 +33,7 @@ else
     apt-get install -y wireguard
     chown wireguard:1003 /etc/wireguard/wg0.conf
 fi
+
 
 cd /etc/wireguard/
 sudo touch /etc/wireguard/wg0.conf

@@ -21,7 +21,9 @@ fi
 
 #apt-get install -y wireguard
 
+echo "You will need to upload your public key to your wireguard server"
 
+echo "You will also need to "
 
 #read -p "Paste in your WireGuard server public key  :" WG_server_pubkey
 
