@@ -1,6 +1,6 @@
 #!/bin/bash
 
-$1=client_pub_key
+$1=WG_server_pub_key
 $2=server_ip
 GID=1003
 UID=1003
@@ -83,8 +83,7 @@ sed -i "s/server_ip/$server_ip/g" /etc/wireguard/wg0.conf
 #Quick enable wg0 interface
 wg-quick up wg0
 
-# SSH into server to edit config file w/ sed script
-#ssh -t root@$server_ip 'cd /etc/wireguard/wg0.conf;sed -i "s/new_client_private_key/$private_key/g" /etc/wireguard/wg0-client.conf;'
+
 
 echo "Your traffic is now encrypted"
 echo "
