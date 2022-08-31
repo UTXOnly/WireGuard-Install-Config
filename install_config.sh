@@ -21,7 +21,6 @@ first_ip_address="$(curl -Ls ifconfig.me)"
 
 echo "Your public IP is: " $first_ip_address
 
-echo "Y"
 
 apt-get update -y
 
@@ -74,7 +73,7 @@ echo "PublicKey = $client_pub_key"  >> wg0.conf
 #Quick enable wg0 interface
 wg-quick up wg0
 
-
+sudo apt install ufw
 #Adjust firewall to allow SSH and wireguardVPN traffic
 ufw allow 22/tcp
 ufw allow 51820/udp
