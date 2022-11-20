@@ -47,6 +47,10 @@ umask 077; wg genkey | tee privatekey | wg pubkey > publickey
 #Create variable for private key
 private_key=$(< privatekey)
 
+sudo chown 1003:1003 /etc/wireguard
+sudo chmod 757 /etc/wireguard
+sudo chmod 755 /etc/wireguard/wg0.conf
+sudo chown 1003:1003 /etc/wireguard/wg0.conf
 
 #Populate wg0.conf w/ config and firewall rules to masquerade client traffic from server
 conf_file=/etc/wireguard/wg0.conf
@@ -61,10 +65,7 @@ PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING 
 AllowedIPS = 10.0.0.0/24
 PersistentKeepalive = 25
 EOF
-sudo chown 1003:1003 /etc/wireguard
-sudo chmod 757 /etc/wireguard
-sudo chmod 755 /etc/wireguard/wg0.conf
-sudo chown 1003:1003 /etc/wireguard/wg0.conf
+
 
 #Sed script to replace string w/ variable
 sudo sed "s|a_private_key|$private_key|g" -i /etc/wireguard/wg0.conf
