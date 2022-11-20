@@ -33,7 +33,8 @@ else
     
 fi
 
-
+sudo chown 1003:1003 /etc/wireguard
+sudo chmod 757 /etc/wireguard
 
 cd /etc/wireguard/
 #su - wireguard -c "touch /etc/wireguard/wg0.conf"
@@ -47,8 +48,7 @@ umask 077; wg genkey | tee privatekey | wg pubkey > publickey
 #Create variable for private key
 private_key=$(< privatekey)
 
-sudo chown 1003:1003 /etc/wireguard
-sudo chmod 757 /etc/wireguard
+
 sudo chmod 755 /etc/wireguard/wg0.conf
 sudo chown 1003:1003 /etc/wireguard/wg0.conf
 
