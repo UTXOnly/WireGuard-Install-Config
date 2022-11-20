@@ -30,14 +30,14 @@ if [ -f "$conf_file" ]; then
 else
 	sudo touch /etc/wireguard/wg0.conf_file
     sudo apt install -y wireguard
-    sudo chown 1003:1003 /etc/wireguard/wg0.conf
+    sudo chown -R 1003:1003 /etc/wireguard/wg0.conf
 fi
 
-sudo chown 1003:1003 /etc/wireguard
-sudo chmod 664 /etc/wireguard
+sudo chown -R 1003:1003 /etc/wireguard
+sudo chmod -R 666 /etc/wireguard
 cd /etc/wireguard/
 sudo touch /etc/wireguard/wg0.conf
-sudo chmod 664 /etc/wireguard/wg0.conf
+sudo chmod -R 666 /etc/wireguard/wg0.conf
 
 #Generate public/private keypair 
 umask 077; wg genkey | tee privatekey | wg pubkey > publickey
