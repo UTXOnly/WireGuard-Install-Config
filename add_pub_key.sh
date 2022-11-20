@@ -14,3 +14,4 @@ elif [ $ANSWER1 == 2 ] ; then
         echo ""
         echo "PublicKey = $client_pub_key"  >> /etc/wireguard/wg0.conf
         echo "Added client pub key"
+fi
