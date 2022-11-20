@@ -2,13 +2,6 @@
 
 #client_pub_key=$1
 
-GID=1003
-User_ID=1003
-USERNAME=wireguard
-
-sudo groupadd -g $GID -o $USERNAME && \
-sudo useradd -m -u $User_ID -g $GID -o -d /home/$USERNAME -s /bin/bash $USERNAME && \
-echo "$USERNAME    ALL=(ALL:ALL) NOPASSWD: ALL"| sudo tee -a /etc/sudoers
 
 
 #Enable IPv4 forwarding
@@ -30,14 +23,10 @@ if [ -f "$conf_file" ]; then
 else
 	sudo touch /etc/wireguard/wg0.conf_file
     sudo apt install -y wireguard
-    sudo chown -R 1003:1003 /etc/wireguard/wg0.conf
+    
 fi
 
-sudo chown -R 1003:1003 /etc/wireguard
-sudo chmod -R 666 /etc/wireguard
-cd /etc/wireguard/
-sudo touch /etc/wireguard/wg0.conf
-sudo chmod -R 666 /etc/wireguard/wg0.conf
+
 
 #Generate public/private keypair 
 umask 077; wg genkey | tee privatekey | wg pubkey > publickey
