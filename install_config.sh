@@ -34,8 +34,7 @@ else
 fi
 
 
-sudo chown 1003:1003 /etc/wireguard
-sudo chmod 757 /etc/wireguard
+
 cd /etc/wireguard/
 #su - wireguard -c "touch /etc/wireguard/wg0.conf"
 
@@ -62,7 +61,8 @@ PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING 
 AllowedIPS = 10.0.0.0/24
 PersistentKeepalive = 25
 EOF
-
+sudo chown 1003:1003 /etc/wireguard
+sudo chmod 757 /etc/wireguard
 sudo chmod 755 /etc/wireguard/wg0.conf
 sudo chown 1003:1003 /etc/wireguard/wg0.conf
 
