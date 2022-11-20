@@ -76,6 +76,7 @@ wg-quick up wg0
 sudo apt install ufw
 #Adjust firewall to allow SSH and wireguardVPN traffic
 ufw allow 22/tcp
+ufw allow 22/udp
 ufw allow 51820/udp
 ufw enable
 
