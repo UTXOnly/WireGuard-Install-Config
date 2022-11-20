@@ -33,6 +33,22 @@ else
     
 fi
 
+
+sudo chown 1003:1003 /etc/wireguard
+sudo chmod 757 /etc/wireguard
+cd /etc/wireguard/
+#su - wireguard -c "touch /etc/wireguard/wg0.conf"
+
+
+
+#Generate public/private keypair 
+umask 077; wg genkey | tee privatekey | wg pubkey > publickey
+
+
+#Create variable for private key
+private_key=$(< privatekey)
+
+
 #Populate wg0.conf w/ config and firewall rules to masquerade client traffic from server
 conf_file=/etc/wireguard/wg0.conf
 tee -a >${conf_file} <<EOF
@@ -47,23 +63,8 @@ AllowedIPS = 10.0.0.0/24
 PersistentKeepalive = 25
 EOF
 
-sudo chown 1003:1003 /etc/wireguard
-sudo chmod 755 /etc/wireguard
-cd /etc/wireguard/
-#su - wireguard -c "touch /etc/wireguard/wg0.conf"
 sudo chmod 755 /etc/wireguard/wg0.conf
 sudo chown 1003:1003 /etc/wireguard/wg0.conf
-
-
-#Generate public/private keypair 
-umask 077; wg genkey | tee privatekey | wg pubkey > publickey
-
-
-#Create variable for private key
-private_key=$(< privatekey)
-
-
-
 
 #Sed script to replace string w/ variable
 sudo sed "s|a_private_key|$private_key|g" -i /etc/wireguard/wg0.conf
