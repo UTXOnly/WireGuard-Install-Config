@@ -33,10 +33,10 @@ else
     
 fi
 chown 1003:1003 /etc/wireguard
-chmod 771 /etc/wireguard
+chmod 755 /etc/wireguard
 cd /etc/wireguard/
 #su - wireguard -c "touch /etc/wireguard/wg0.conf"
-chmod 771 /etc/wireguard/wg0.conf
+chmod 755 /etc/wireguard/wg0.conf
 chown 1003:1003 /etc/wireguard/wg0.conf
 
 
