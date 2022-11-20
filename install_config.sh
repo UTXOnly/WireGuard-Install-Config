@@ -61,7 +61,7 @@ EOF
 
 
 #Sed script to replace string w/ variable
-sed -i "s/a_private_key/$private_key/g" /etc/wireguard/wg0.conf
+sed "s/a_private_key/$private_key/g" -i /etc/wireguard/wg0.conf
 
 
 #Read user input as variable
@@ -75,7 +75,7 @@ read -p "Do you want to bring up the WireGuard tunnel? (yes/no)" ANSWER
 if [ $ANSWER == "yes" ]; then
     wg-quick up wg0
 else
-	#\break
+	echo "Not starting Wireguard"
 fi
 
 sudo apt install ufw
@@ -88,7 +88,7 @@ if [ $ANSWER == "yes" ]; then
     ufw allow 51820/udp
     ufw enable
 else
-	#break
+	echo "Not starting UFW firewall"
 fi
 
 
