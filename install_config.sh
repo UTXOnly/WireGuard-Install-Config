@@ -21,7 +21,7 @@ first_ip_address="$(curl -Ls ifconfig.me)"
 
 echo "Your public IP is: " $first_ip_address
 
-su - wireguard
+#su - wireguard
 apt-get update -y
 
 conf_file=/etc/wireguard/wg0.conf
@@ -33,10 +33,10 @@ else
     chown wireguard:1003 /etc/wireguard/wg0.conf
 fi
 
-
+chown wireguard:1003 /etc/wireguard
 cd /etc/wireguard/
-sudo touch /etc/wireguard/wg0.conf
-sudo chmod 777 /etc/wireguard/wg0.conf
+touch /etc/wireguard/wg0.conf
+chmod 777 /etc/wireguard/wg0.conf
 
 #Generate public/private keypair 
 umask 077; wg genkey | tee privatekey | wg pubkey > publickey
@@ -75,7 +75,7 @@ read -p "Do you want to bring up the WireGuard tunnel? (yes/no)" ANSWER
 if [ $ANSWER == "yes" ]; then
     wg-quick up wg0
 else
-	break
+	#\break
 fi
 
 sudo apt install ufw
@@ -88,7 +88,7 @@ if [ $ANSWER == "yes" ]; then
     ufw allow 51820/udp
     ufw enable
 else
-	break
+	#break
 fi
 
 
