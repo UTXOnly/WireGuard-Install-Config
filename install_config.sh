@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#client_pub_key=$1
-
 GID=1003
 User_ID=1003
 USERNAME=wireguard
@@ -10,17 +8,11 @@ sudo groupadd -g $GID -o $USERNAME && \
 sudo useradd -m -u $User_ID -g $GID -o -d /home/$USERNAME -s /bin/bash $USERNAME && \
 echo "$USERNAME    ALL=(ALL:ALL) NOPASSWD: ALL"| sudo tee -a /etc/sudoers
 
-#Enable IPv4 forwarding
+#Enable IPv4 forwarding load new settings
 sudo sed '/net.ipv4.ip_forward=1/s/^#//' -i /etc/sysctl.conf
 sudo sysctl -p
 
 
-#Create variable for host's public IP
-first_ip_address="$(curl -Ls ifconfig.me)"
-
-echo "Your public IP is: " $first_ip_address
-
-#su - wireguard
 sudo apt-get update -y
 
 conf_file=/etc/wireguard/wg0.conf
@@ -28,18 +20,13 @@ if [ -f "$conf_file" ]; then
     echo "$conf_file exists"
 else
 	sudo apt install -y wireguard
-    sudo touch /etc/wireguard/wg0.conf
-    
-    
+    sudo touch /etc/wireguard/wg0.conf 
 fi
 
 sudo chown 1003:1003 /etc/wireguard
 sudo chmod 757 /etc/wireguard
 
 cd /etc/wireguard/
-#su - wireguard -c "touch /etc/wireguard/wg0.conf"
-
-
 
 #Generate public/private keypair 
 umask 077; wg genkey | tee privatekey | wg pubkey > publickey
@@ -47,9 +34,6 @@ umask 077; wg genkey | tee privatekey | wg pubkey > publickey
 
 #Create variable for private key
 private_key=$(< privatekey)
-
-
-
 
 #Populate wg0.conf w/ config and firewall rules to masquerade client traffic from server
 sudo chmod 777 /etc/wireguard/wg0.conf
@@ -66,17 +50,11 @@ AllowedIPS = 10.0.0.0/24
 PersistentKeepalive = 25
 EOF
 
-
 #Sed script to replace string w/ variable
 sudo sed "s|a_private_key|$private_key|g" -i /etc/wireguard/wg0.conf
 
 sudo chmod 755 /etc/wireguard/wg0.conf
 sudo chown 1003:1003 /etc/wireguard/wg0.conf
-#Read user input as variable
-#read -p "What is the public key of the client?" client_pub_key
-
-#Pipe contents of variable to append wg0.conf
-#echo "PublicKey = $client_pub_key"  >> wg0.conf
 
 #Quick enable wg0 interface
 read -p "Do you want to bring up the WireGuard tunnel? (yes/no)" ANSWER
@@ -99,3 +77,8 @@ if [ $ANSWER == "yes" ]; then
 else
 	echo "Not starting UFW firewall"
 fi
+
+#Create variable for host's public IP
+first_ip_address="$(curl -Ls ifconfig.me)"
+
+echo "Your public IP is: $first_ip_address please save this to run with the add_pub_key.sh script"
