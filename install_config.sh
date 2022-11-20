@@ -41,7 +41,7 @@ sudo chown 1003:1003 /etc/wireguard/wg0.conf
 
 
 #Generate public/private keypair 
-umask 077; wg genkey | tee privatekey | wg pubkey > publickey
+sudo umask 077; wg genkey | tee privatekey | wg pubkey > publickey
 
 
 #Create variable for private key
@@ -49,7 +49,7 @@ private_key=$(< privatekey)
 
 #Populate wg0.conf w/ config and firewall rules to masquerade client traffic from server
 conf_file=/etc/wireguard/wg0.conf
-tee -a >${conf_file} <<EOF
+sudo tee -a >${conf_file} <<EOF
 [Interface]
 PrivateKey = a_private_key
 Address = 10.0.0.0/24
