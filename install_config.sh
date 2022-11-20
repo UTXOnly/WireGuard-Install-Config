@@ -63,7 +63,7 @@ EOF
 
 
 #Sed script to replace string w/ variable
-su - wireguard -c 'sed "s|a_private_key|$private_key|g" -i /etc/wireguard/wg0.conf'
+sudo sed "s|a_private_key|$private_key|g" -i /etc/wireguard/wg0.conf
 
 
 #Read user input as variable
