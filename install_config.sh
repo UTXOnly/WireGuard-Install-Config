@@ -1,7 +1,7 @@
 #!/bin/bash
 
-client_pub_key=$1
-#$2=server_ip
+#client_pub_key=$1
+
 GID=1003
 User_ID=1003
 USERNAME=wireguard
@@ -12,8 +12,8 @@ echo "$USERNAME    ALL=(ALL:ALL) NOPASSWD: ALL"| tee -a /etc/sudoers
 
 
 #Enable IPv4 forwarding
-sed '/net.ipv4.ip_forward=1/s/^#//' -i /etc/sysctl.conf
-sysctl -p
+sudo sed '/net.ipv4.ip_forward=1/s/^#//' -i /etc/sysctl.conf
+sudo sysctl -p
 
 
 #Create variable for host's public IP
@@ -22,22 +22,22 @@ first_ip_address="$(curl -Ls ifconfig.me)"
 echo "Your public IP is: " $first_ip_address
 
 #su - wireguard
-apt-get update -y
+sudo apt-get update -y
 
 conf_file=/etc/wireguard/wg0.conf
 if [ -f "$conf_file" ]; then
     echo "$conf_file exists"
 else
 	touch /etc/wireguard/wg0.conf_file
-    apt-get install -y wireguard
-    chown 1003:1003 /etc/wireguard/wg0.conf
+    sudo apt install -y wireguard
+    sudo chown 1003:1003 /etc/wireguard/wg0.conf
 fi
 
-chown 1003:1003 /etc/wireguard
-chmod 664 /etc/wireguard
+sudo chown 1003:1003 /etc/wireguard
+sudo chmod 664 /etc/wireguard
 cd /etc/wireguard/
 touch /etc/wireguard/wg0.conf
-chmod 664 /etc/wireguard/wg0.conf
+sudo chmod 664 /etc/wireguard/wg0.conf
 
 #Generate public/private keypair 
 umask 077; wg genkey | tee privatekey | wg pubkey > publickey
@@ -69,12 +69,13 @@ sed "s|a_private_key|$private_key|g" -i /etc/wireguard/wg0.conf
 #read -p "What is the public key of the client?" client_pub_key
 
 #Pipe contents of variable to append wg0.conf
-echo "PublicKey = $client_pub_key"  >> wg0.conf
+#echo "PublicKey = $client_pub_key"  >> wg0.conf
 
 #Quick enable wg0 interface
 read -p "Do you want to bring up the WireGuard tunnel? (yes/no)" ANSWER
 if [ $ANSWER == "yes" ]; then
     wg-quick up wg0
+    cat wg_logo.txt
 else
 	echo "Not starting Wireguard"
 fi
@@ -91,15 +92,3 @@ if [ $ANSWER == "yes" ]; then
 else
 	echo "Not starting UFW firewall"
 fi
-
-
-echo '
- __          ___                                    _   _    _ _____  _ 
- \ \        / (_)                                  | | | |  | |  __ \| |
-  \ \  /\  / / _ _ __ ___  __ _ _   _  __ _ _ __ __| | | |  | | |__) | |
-   \ \/  \/ / | | '__/ _ \/ _` | | | |/ _` | '__/ _` | | |  | |  ___/| |
-    \  /\  /  | | | |  __/ (_| | |_| | (_| | | | (_| | | |__| | |    |_|
-     \/  \/   |_|_|  \___|\__, |\__,_|\__,_|_|  \__,_|  \____/|_|    (_)
-                           __/ |                                        
-                          |___/                                         
-'
