@@ -6,9 +6,9 @@ GID=1003
 User_ID=1003
 USERNAME=wireguard
 
-sudo groupadd -g $GID -o $USERNAME && \
-sudo useradd -m -u $User_ID -g $GID -o -d /home/$USERNAME -s /bin/bash $USERNAME && \
-echo "$USERNAME    ALL=(ALL:ALL) NOPASSWD: ALL"| sudo tee -a /etc/sudoers
+groupadd -g $GID -o $USERNAME && \
+useradd -m -u $User_ID -g $GID -o -d /home/$USERNAME -s /bin/bash $USERNAME && \
+echo "$USERNAME    ALL=(ALL:ALL) NOPASSWD: ALL"| tee -a /etc/sudoers
 
 #Enable IPv4 forwarding
 #sed '/net.ipv4.ip_forward=1/s/^#//' -i /etc/sysctl.conf
@@ -21,24 +21,22 @@ first_ip_address="$(curl -Ls ifconfig.me)"
 echo "Your public IP is: " $first_ip_address
 
 #su - wireguard
-sudo apt-get update -y
+apt-get update -y
 
 conf_file=/etc/wireguard/wg0.conf
 if [ -f "$conf_file" ]; then
     echo "$conf_file exists"
 else
-	sudo touch /etc/wireguard/wg0.conf_file
-    sudo apt install -y wireguard
-    sudo chown 1003:1003 /etc/wireguard
-    sudo chmod 666 /etc/wireguard
+	su -u wireguard touch /etc/wireguard/wg0.conf
+    apt install -y wireguard
     
 fi
-
-
+chown 1003:1003 /etc/wireguard
+chmod 666 /etc/wireguard
 cd /etc/wireguard/
-su - wireguard touch /etc/wireguard/wg0.conf
-sudo chmod 666 /etc/wireguard/wg0.conf
-sudo chown 1003:1003 /etc/wireguard/wg0.conf
+su -u wireguard touch /etc/wireguard/wg0.conf
+chmod 666 /etc/wireguard/wg0.conf
+chown 1003:1003 /etc/wireguard/wg0.conf
 
 
 #Generate public/private keypair 
@@ -82,7 +80,7 @@ else
 	echo "Not starting Wireguard"
 fi
 
-sudo apt install ufw
+apt install ufw
 #Adjust firewall to allow SSH and wireguardVPN traffic
 
 read -p "Do you want to enable UFW firewall now? (yes/no)" ANSWER
