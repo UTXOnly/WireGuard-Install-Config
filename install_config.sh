@@ -21,7 +21,7 @@ first_ip_address="$(curl -Ls ifconfig.me)"
 
 echo "Your public IP is: " $first_ip_address
 
-
+su - wireguard
 apt-get update -y
 
 conf_file=/etc/wireguard/wg0.conf
