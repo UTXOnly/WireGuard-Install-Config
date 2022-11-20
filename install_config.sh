@@ -41,7 +41,7 @@ sudo chown 1003:1003 /etc/wireguard/wg0.conf
 
 
 #Generate public/private keypair 
-sudo umask 077; wg genkey | tee privatekey | wg pubkey > publickey
+umask 077; wg genkey | tee privatekey | wg pubkey > publickey
 
 
 #Create variable for private key
