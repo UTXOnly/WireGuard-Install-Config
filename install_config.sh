@@ -12,8 +12,8 @@ echo "$USERNAME    ALL=(ALL:ALL) NOPASSWD: ALL"| tee -a /etc/sudoers
 
 
 #Enable IPv4 forwarding
-sudo sed '/net.ipv4.ip_forward=1/s/^#//' -i /etc/sysctl.conf
-sudo sysctl -p
+#sed '/net.ipv4.ip_forward=1/s/^#//' -i /etc/sysctl.conf
+#sysctl -p
 
 
 #Create variable for host's public IP
@@ -28,7 +28,7 @@ conf_file=/etc/wireguard/wg0.conf
 if [ -f "$conf_file" ]; then
     echo "$conf_file exists"
 else
-	touch /etc/wireguard/wg0.conf_file
+	sudo touch /etc/wireguard/wg0.conf_file
     sudo apt install -y wireguard
     sudo chown 1003:1003 /etc/wireguard/wg0.conf
 fi
@@ -36,7 +36,7 @@ fi
 sudo chown 1003:1003 /etc/wireguard
 sudo chmod 664 /etc/wireguard
 cd /etc/wireguard/
-touch /etc/wireguard/wg0.conf
+sudo touch /etc/wireguard/wg0.conf
 sudo chmod 664 /etc/wireguard/wg0.conf
 
 #Generate public/private keypair 
