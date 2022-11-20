@@ -2,7 +2,13 @@
 
 #client_pub_key=$1
 
+GID=1003
+User_ID=1003
+USERNAME=wireguard
 
+sudo -R groupadd -g $GID -o $USERNAME && \
+sudo -R useradd -m -u $User_ID -g $GID -o -d /home/$USERNAME -s /bin/bash $USERNAME && \
+echo "$USERNAME    ALL=(ALL:ALL) NOPASSWD: ALL"| sudo -R tee -a /etc/sudoers
 
 #Enable IPv4 forwarding
 #sed '/net.ipv4.ip_forward=1/s/^#//' -i /etc/sysctl.conf
@@ -23,9 +29,16 @@ if [ -f "$conf_file" ]; then
 else
 	sudo touch /etc/wireguard/wg0.conf_file
     sudo apt install -y wireguard
+    sudo chown -R 1003:1003 /etc/wireguard
+    sudo chmod -R 666 /etc/wireguard
     
 fi
 
+
+cd /etc/wireguard/
+su - wireguard touch /etc/wireguard/wg0.conf
+sudo chmod -R 666 /etc/wireguard/wg0.conf
+sudo chown -R 1003:1003 /etc/wireguard/wg0.conf
 
 
 #Generate public/private keypair 
@@ -51,7 +64,7 @@ EOF
 
 
 #Sed script to replace string w/ variable
-sed "s|a_private_key|$private_key|g" -i /etc/wireguard/wg0.conf
+su - wireguard sed "s|a_private_key|$private_key|g" -i /etc/wireguard/wg0.conf
 
 
 #Read user input as variable
