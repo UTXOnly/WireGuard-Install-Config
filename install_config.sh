@@ -6,8 +6,8 @@ GID=1003
 User_ID=1003
 USERNAME=wireguard
 
-groupadd -g $GID -o $USERNAME && \
-useradd -m -u $User_ID -g $GID -o -d /home/$USERNAME -s /bin/bash $USERNAME && \
+sudo groupadd -g $GID -o $USERNAME && \
+sudo useradd -m -u $User_ID -g $GID -o -d /home/$USERNAME -s /bin/bash $USERNAME && \
 echo "$USERNAME    ALL=(ALL:ALL) NOPASSWD: ALL"| tee -a /etc/sudoers
 
 
