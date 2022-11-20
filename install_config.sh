@@ -28,16 +28,16 @@ if [ -f "$conf_file" ]; then
     echo "$conf_file exists"
 else
 	sudo apt install -y wireguard
-    touch /etc/wireguard/wg0.conf
+    sudo touch /etc/wireguard/wg0.conf
     
     
 fi
-chown 1003:1003 /etc/wireguard
-chmod 755 /etc/wireguard
+sudo chown 1003:1003 /etc/wireguard
+sudo chmod 755 /etc/wireguard
 cd /etc/wireguard/
 #su - wireguard -c "touch /etc/wireguard/wg0.conf"
-chmod 755 /etc/wireguard/wg0.conf
-chown 1003:1003 /etc/wireguard/wg0.conf
+sudo chmod 755 /etc/wireguard/wg0.conf
+sudo chown 1003:1003 /etc/wireguard/wg0.conf
 
 
 #Generate public/private keypair 
