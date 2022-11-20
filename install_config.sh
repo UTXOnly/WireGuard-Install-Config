@@ -28,7 +28,7 @@ if [ -f "$conf_file" ]; then
     echo "$conf_file exists"
 else
 	apt install -y wireguard
-    su - wireguard -c "touch /etc/wireguard/wg0.conf"
+    touch /etc/wireguard/wg0.conf
     
     
 fi
@@ -36,7 +36,7 @@ chown 1003:1003 /etc/wireguard
 chmod 666 /etc/wireguard
 cd /etc/wireguard/
 #su - wireguard -c "touch /etc/wireguard/wg0.conf"
-chmod 666 /etc/wireguard/wg0.conf
+chmod 777 /etc/wireguard/wg0.conf
 chown 1003:1003 /etc/wireguard/wg0.conf
 
 
