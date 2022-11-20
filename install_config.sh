@@ -27,14 +27,14 @@ conf_file=/etc/wireguard/wg0.conf
 if [ -f "$conf_file" ]; then
     echo "$conf_file exists"
 else
-	su -u wireguard touch /etc/wireguard/wg0.conf
+	su - wireguard -c "touch /etc/wireguard/wg0.conf"
     apt install -y wireguard
     
 fi
 chown 1003:1003 /etc/wireguard
 chmod 666 /etc/wireguard
 cd /etc/wireguard/
-su -u wireguard touch /etc/wireguard/wg0.conf
+su - wireguard -c "touch /etc/wireguard/wg0.conf"
 chmod 666 /etc/wireguard/wg0.conf
 chown 1003:1003 /etc/wireguard/wg0.conf
 
@@ -62,7 +62,7 @@ EOF
 
 
 #Sed script to replace string w/ variable
-su - wireguard sed "s|a_private_key|$private_key|g" -i /etc/wireguard/wg0.conf
+su - wireguard -c 'sed "s|a_private_key|$private_key|g" -i /etc/wireguard/wg0.conf'
 
 
 #Read user input as variable
