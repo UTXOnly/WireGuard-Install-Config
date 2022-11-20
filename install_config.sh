@@ -52,7 +52,7 @@ private_key=$(< privatekey)
 
 
 #Populate wg0.conf w/ config and firewall rules to masquerade client traffic from server
-sudo chmod u+x /etc/wireguard/wg0.conf
+sudo chmod 777 /etc/wireguard/wg0.conf
 conf_file=/etc/wireguard/wg0.conf
 sudo tee -a >${conf_file} <<EOF
 [Interface]
