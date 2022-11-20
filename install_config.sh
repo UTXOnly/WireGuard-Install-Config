@@ -49,8 +49,7 @@ umask 077; wg genkey | tee privatekey | wg pubkey > publickey
 private_key=$(< privatekey)
 
 
-sudo chmod 755 /etc/wireguard/wg0.conf
-sudo chown 1003:1003 /etc/wireguard/wg0.conf
+
 
 #Populate wg0.conf w/ config and firewall rules to masquerade client traffic from server
 conf_file=/etc/wireguard/wg0.conf
@@ -70,7 +69,8 @@ EOF
 #Sed script to replace string w/ variable
 sudo sed "s|a_private_key|$private_key|g" -i /etc/wireguard/wg0.conf
 
-
+sudo chmod 755 /etc/wireguard/wg0.conf
+sudo chown 1003:1003 /etc/wireguard/wg0.conf
 #Read user input as variable
 #read -p "What is the public key of the client?" client_pub_key
 
