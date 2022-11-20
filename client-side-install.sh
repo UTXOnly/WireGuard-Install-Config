@@ -74,8 +74,14 @@ sed -i "s/server_ip/$server_ip/g" /etc/wireguard/wg0.conf
 
 #Quick enable wg0 interface
 
-read -p "Do you want to bring up the WireGuard tunnel?"
-wg-quick up wg0
+read -p "Do you want to bring up the WireGuard tunnel? (yes/no)" ANSWER
+if [ $ANSWER == "yes" ]; then
+    wg-quick up wg0
+else
+	break
+fi
+
+
 
 
 

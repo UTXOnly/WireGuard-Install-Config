@@ -1,7 +1,7 @@
 #!/bin/bash
 
-$1=client_pub_key
-$2=server_ip
+client_pub_key=$1
+#$2=server_ip
 GID=1003
 UID=1003
 USERNAME=wireguard
@@ -71,14 +71,26 @@ sed -i "s/a_private_key/$private_key/g" /etc/wireguard/wg0.conf
 echo "PublicKey = $client_pub_key"  >> wg0.conf
 
 #Quick enable wg0 interface
-wg-quick up wg0
+read -p "Do you want to bring up the WireGuard tunnel? (yes/no)" ANSWER
+if [ $ANSWER == "yes" ]; then
+    wg-quick up wg0
+else
+	break
+fi
 
 sudo apt install ufw
 #Adjust firewall to allow SSH and wireguardVPN traffic
-ufw allow 22/tcp
-ufw allow 22/udp
-ufw allow 51820/udp
-ufw enable
+
+read -p "Do you want to enable UFW firewall now? (yes/no)" ANSWER
+if [ $ANSWER == "yes" ]; then
+    ufw allow 22/tcp
+    ufw allow 22/udp
+    ufw allow 51820/udp
+    ufw enable
+else
+	break
+fi
+
 
 echo '
  __          ___                                    _   _    _ _____  _ 
