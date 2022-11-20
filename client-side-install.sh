@@ -61,7 +61,7 @@ Endpoint=server_ip:51820
 AllowedIPs = 0.0.0.0/0 # Forward all traffic to server
 EOF
 #Populate begining of config file
-echo load_config >> /etc/wireguard/wg0.conf
+#echo load_config >> /etc/wireguard/wg0.conf
 
 #Sed script to replace string w/ variable
 sed -i "s/a_private_key/$private_key/g" /etc/wireguard/wg0.conf
@@ -73,6 +73,8 @@ sed -i "s/WG_server_pubkey/$WG_server_pubkey/g" /etc/wireguard/wg0.conf
 sed -i "s/server_ip/$server_ip/g" /etc/wireguard/wg0.conf
 
 #Quick enable wg0 interface
+
+read -p "Do you want to bring up the WireGuard tunnel?"
 wg-quick up wg0
 
 
