@@ -1,6 +1,6 @@
 #!/bin/bash
 
-read -p Would you like to:\n \n 1. Add server public key and IP address to client configuration? \n OR \n 2. Add client public key to server configuration?  ANSWER1
+read -e -p "Would you like to:\n \n 1) Add server public key and IP address to client configuration? \n OR \n 2) Add client public key to server configuration?"  ANSWER1
 
 if [ $ANSWER1 == 1 ] ; then
     read -p "Please enter server public key then press ENTER" WG_server_pub_key
