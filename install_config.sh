@@ -3,11 +3,11 @@
 client_pub_key=$1
 #$2=server_ip
 GID=1003
-UID=1003
+User_ID=1003
 USERNAME=wireguard
 
 groupadd -g $GID -o $USERNAME && \
-useradd -m -u $UID -g $GID -o -d /home/$USERNAME -s /bin/bash $USERNAME && \
+useradd -m -u $User_ID -g $GID -o -d /home/$USERNAME -s /bin/bash $USERNAME && \
 echo "$USERNAME    ALL=(ALL:ALL) NOPASSWD: ALL"| tee -a /etc/sudoers
 
 
@@ -34,6 +34,7 @@ else
 fi
 
 chown 1003:1003 /etc/wireguard
+chmod 777 /etc/wireguard
 cd /etc/wireguard/
 touch /etc/wireguard/wg0.conf
 chmod 777 /etc/wireguard/wg0.conf
