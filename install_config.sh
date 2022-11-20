@@ -35,7 +35,7 @@ fi
 
 #Populate wg0.conf w/ config and firewall rules to masquerade client traffic from server
 conf_file=/etc/wireguard/wg0.conf
-sudo tee -a >${conf_file} <<EOF
+tee -a >${conf_file} <<EOF
 [Interface]
 PrivateKey = a_private_key
 Address = 10.0.0.0/24
