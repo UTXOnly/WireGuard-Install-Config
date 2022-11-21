@@ -73,7 +73,7 @@ sudo apt install ufw
 echo -e "${BRed}Do you want to enable UFW firewall now? (yes/no)${NC}"
 read ANSWER
 if [ $ANSWER == "yes" ]; then
-    sudo bash firewall_rules.sh
+    sudo firewall_rules.sh
 else
 	echo "Not starting UFW firewall"
 fi
