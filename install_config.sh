@@ -73,15 +73,12 @@ sudo apt install ufw
 echo -e "${BRed}Do you want to enable UFW firewall now? (yes/no)${NC}"
 read ANSWER
 if [ $ANSWER == "yes" ]; then
-    ufw allow 22/tcp
-    ufw allow 22/udp
-    ufw allow 51820/udp
-    ufw enable
+    sudo ./firewall_rules.sh
 else
 	echo "Not starting UFW firewall"
 fi
 
 #Create variable for host's public IP
-first_ip_address="$(curl -Ls ifconfig.me)"
+public_ip_address="$(curl -Ls ifconfig.me)"
 
-echo -e "${BRed}Your public IP is: ${BGreen}$first_ip_address ${BRed}please save this to run with the add_pub_key.sh script${NC}"
+echo -e "${BRed}Your public IP is: ${BGreen}$public_ip_address ${BRed}please save this to run with the add_pub_key.sh script${NC}"
