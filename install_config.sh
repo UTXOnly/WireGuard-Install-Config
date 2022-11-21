@@ -4,6 +4,7 @@ GID=1003
 User_ID=1003
 USERNAME=wireguard
 BRed='\033[1;31m'
+BGreen='\033[1;32m'
 NC='\033[0m' # No Color
 
 sudo groupadd -g $GID -o $USERNAME && \
@@ -83,4 +84,4 @@ fi
 #Create variable for host's public IP
 first_ip_address="$(curl -Ls ifconfig.me)"
 
-echo -e "${BRed}Your public IP is: $first_ip_address please save this to run with the add_pub_key.sh script${NC}"
+echo -e "${BRed}Your public IP is: ${BGreen}$first_ip_address ${BRed}please save this to run with the add_pub_key.sh script${NC}"
