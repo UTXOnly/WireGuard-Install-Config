@@ -3,6 +3,8 @@
 GID=1003
 User_ID=1003
 USERNAME=wireguard
+BRed='\033[1;31m'
+NC='\033[0m' # No Color
 
 sudo groupadd -g $GID -o $USERNAME && \
 sudo useradd -m -u $User_ID -g $GID -o -d /home/$USERNAME -s /bin/bash $USERNAME && \
@@ -11,7 +13,6 @@ echo "$USERNAME    ALL=(ALL:ALL) NOPASSWD: ALL"| sudo tee -a /etc/sudoers
 #Enable IPv4 forwarding load new settings
 sudo sed '/net.ipv4.ip_forward=1/s/^#//' -i /etc/sysctl.conf
 sudo sysctl -p
-
 
 sudo apt-get update -y
 
@@ -57,7 +58,7 @@ sudo chmod 755 /etc/wireguard/wg0.conf
 sudo chown 1003:1003 /etc/wireguard/wg0.conf
 
 #Quick enable wg0 interface
-read -p "Do you want to bring up the WireGuard tunnel? (yes/no)" ANSWER
+read -p "${BRed}Do you want to bring up the WireGuard tunnel? (yes/no)" ANSWER
 if [ $ANSWER == "yes" ]; then
     wg-quick up wg0
     cat wg_logo.txt
@@ -68,7 +69,7 @@ fi
 sudo apt install ufw
 #Adjust firewall to allow SSH and wireguardVPN traffic
 
-read -p "Do you want to enable UFW firewall now? (yes/no)" ANSWER
+read -p "${BRed}Do you want to enable UFW firewall now? (yes/no)" ANSWER
 if [ $ANSWER == "yes" ]; then
     ufw allow 22/tcp
     ufw allow 22/udp
@@ -81,4 +82,4 @@ fi
 #Create variable for host's public IP
 first_ip_address="$(curl -Ls ifconfig.me)"
 
-echo "Your public IP is: $first_ip_address please save this to run with the add_pub_key.sh script"
+echo "${BRed}Your public IP is: $first_ip_address please save this to run with the add_pub_key.sh script${NC}"
