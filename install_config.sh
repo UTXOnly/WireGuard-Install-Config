@@ -58,8 +58,8 @@ sudo chmod 755 /etc/wireguard/wg0.conf
 sudo chown 1003:1003 /etc/wireguard/wg0.conf
 
 #Quick enable wg0 interface
-echo -e "${BRed}Do you want to bring up the WireGuard tunnel? (yes/no)"
-read -p ANSWER
+echo -e "${BRed}Do you want to bring up the WireGuard tunnel? (yes/no)${NC}"
+read ANSWER
 if [ $ANSWER == "yes" ]; then
     wg-quick up wg0
     cat wg_logo.txt
@@ -69,8 +69,8 @@ fi
 
 sudo apt install ufw
 #Adjust firewall to allow SSH and wireguardVPN traffic
-echo -e "${BRed}Do you want to enable UFW firewall now? (yes/no)"
-read -p ANSWER
+echo -e "${BRed}Do you want to enable UFW firewall now? (yes/no)${NC}"
+read ANSWER
 if [ $ANSWER == "yes" ]; then
     ufw allow 22/tcp
     ufw allow 22/udp
