@@ -37,6 +37,7 @@ umask 077; wg genkey | tee privatekey | wg pubkey > publickey
 
 #Create variable for private key
 private_key=$(< privatekey)
+public_key=$(< publickey)
 
 #Populate wg0.conf w/ config and firewall rules to masquerade client traffic from server
 sudo chmod 777 /etc/wireguard/wg0.conf
@@ -78,3 +79,4 @@ echo -e "${BGreen}Install finished${NC}"
 public_ip_address="$(curl -Ls ifconfig.me)"
 
 echo -e "${BGreen}Your public IP is: ${BRed}$public_ip_address ${BGreen}please save this to run with the add_pub_key.sh script${NC}"
+echo -e "${BGreen} Your Wireguard client public key is:\n${BRed} ${public_key} \n You will need to save this to run the add_pub_key.sh script${NC}"
