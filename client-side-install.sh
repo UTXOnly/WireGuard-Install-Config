@@ -46,7 +46,7 @@ AllowedIPs = 0.0.0.0/0 # Forward all traffic to server
 EOF
 
 #Sed script to replace string w/ variable
-sudo sed "s/a_private_key/$private_key/g" -i /etc/wireguard/wg0.conf
+sudo sed "s|a_private_key|$private_key|g" -i /etc/wireguard/wg0.conf
 
 sudo chmod 755 /etc/wireguard/wg0.conf
 
