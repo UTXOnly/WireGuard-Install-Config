@@ -31,6 +31,7 @@ umask 077; wg genkey | tee privatekey | wg pubkey > publickey
 
 #Create variable for private key
 private_key=$(< privatekey)
+public_key=$(< publickey)
 sudo chmod 777 /etc/wireguard/wg0.conf
 # populate wg0.conf file
 tee >${conf_file} << EOF
@@ -49,15 +50,7 @@ sudo sed "s/a_private_key/$private_key/g" -i /etc/wireguard/wg0.conf
 
 sudo chmod 755 /etc/wireguard/wg0.conf
 
-echo -e "${BGreen}Do you want to bring up the WireGuard tunnel? (yes/no)${NC}"
-read ANSWER
-if [ $ANSWER == "yes" ]; then
-    sudo wg-quick up wg0
-else
-	echo "Not starting Wireguard"
-fi
-
-echo -e "${BGreen}Do you want to enable UFW firewall now? (yes/no)${NC}"
+echo -e "${BGreen}Do you want to enable UFW firewall now? ${BRed}WARNING this host will only be able accessable on Port 22 (SSH) or Port 8152/udp (Wireguard) \n If you do not know what this means select NO! \n (yes/no)${NC}"
 read ANSWER
 if [ $ANSWER == "yes" ]; then
     sudo ufw allow 22/tcp
@@ -69,3 +62,4 @@ else
 fi
 
 echo -e "${BGreen}Install finished${NC}"
+echo -e "${BGreen} Your Wireguard client public key is:\n${BRed} ${public_key} \n You will need to save this to run the add_pub_key.sh script${NC}"

@@ -82,6 +82,7 @@ else
 	echo "Not starting UFW firewall"
 fi
 
+echo -e "${BGreen}Install finished${NC}"
 #Create variable for host's public IP
 public_ip_address="$(curl -Ls ifconfig.me)"
 
