@@ -11,27 +11,27 @@ sudo groupadd -g $GID -o $USERNAME && \
 sudo useradd -m -u $User_ID -g $GID -o -d /home/$USERNAME -s /bin/bash $USERNAME && \
 echo "$USERNAME    ALL=(ALL:ALL) NOPASSWD: /usr/bin/append-to-hosts" | sudo tee -a /etc/sudoers
 #client_ip_address="$(curl -Ls ifconfig.me)"
-sudo apt-get update
+sudo apt-get update -y
 
 #If file does not exisit, create it
 conf_file=/etc/wireguard/wg0.conf
 if [ -f "$conf_file" ]; then
     echo "$conf_file exists"
 else
-	sudo touch /etc/wireguard/wg0.conf_file
-    sudo apt-get install -y wireguard
-    sudo chown ${User_ID}:${GID} /etc/wireguard/wg0.conf
+	sudo apt-get install -y wireguard
+    wait
+    sudo touch /etc/wireguard/wg0.conf_file
 fi
-
+sudo chown ${User_ID}:${GID} /etc/wireguard/wg0.conf
+sudo chmod 757 /etc/wireguard
 cd /etc/wireguard 
-
 
 umask 077; wg genkey | tee privatekey | wg pubkey > publickey
 
 
 #Create variable for private key
 private_key=$(< privatekey)
-
+sudo chmod 777 /etc/wireguard/wg0.conf
 # populate wg0.conf file
 tee >${conf_file} << EOF
 [Interface]
@@ -47,8 +47,10 @@ EOF
 #Sed script to replace string w/ variable
 sudo sed -i "s/a_private_key/$private_key/g" /etc/wireguard/wg0.conf
 
+sudo chmod 755 /etc/wireguard/wg0.conf
+
 echo -e "${BGreen}Do you want to bring up the WireGuard tunnel? (yes/no)${NC}"
-read -p ANSWER
+read ANSWER
 if [ $ANSWER == "yes" ]; then
     sudo wg-quick up wg0
 else
@@ -66,6 +68,4 @@ else
 	echo "Not starting UFW firewall"
 fi
 
-
-
-
+echo "${BGreen}Install finished${NC}"

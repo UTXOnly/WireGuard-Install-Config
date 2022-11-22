@@ -22,10 +22,11 @@ if [ -f "$conf_file" ]; then
     echo "$conf_file exists"
 else
 	sudo apt install -y wireguard
+    wait
     sudo touch /etc/wireguard/wg0.conf 
 fi
 
-sudo chown 1003:1003 /etc/wireguard
+sudo chown ${User_ID}:${GID} /etc/wireguard
 sudo chmod 757 /etc/wireguard
 
 cd /etc/wireguard/
@@ -56,7 +57,7 @@ EOF
 sudo sed "s|a_private_key|$private_key|g" -i /etc/wireguard/wg0.conf
 
 sudo chmod 755 /etc/wireguard/wg0.conf
-sudo chown 1003:1003 /etc/wireguard/wg0.conf
+sudo chown ${User_ID}:${GID} /etc/wireguard/wg0.conf
 
 #Quick enable wg0 interface
 echo -e "${BGreen}Do you want to bring up the WireGuard tunnel? (yes/no)${NC}"
