@@ -1,14 +1,15 @@
 #!/bin/bash
 
 GID=1003
-UID=1003
+User_ID=1003
 USERNAME=wireguard
 BRed='\033[1;31m'
+BGreen='\033[1;32m'
 NC='\033[0m' # No Color
 
 sudo groupadd -g $GID -o $USERNAME && \
-sudo useradd -m -u $UID -g $GID -o -d /home/$USERNAME -s /bin/bash $USERNAME && \
-echo "$USERNAME    ALL=(ALL:ALL) NOPASSWD: /usr/bin/append-to-hosts" | tee -a /etc/sudoers
+sudo useradd -m -u $User_ID -g $GID -o -d /home/$USERNAME -s /bin/bash $USERNAME && \
+echo "$USERNAME    ALL=(ALL:ALL) NOPASSWD: /usr/bin/append-to-hosts" | sudo tee -a /etc/sudoers
 #client_ip_address="$(curl -Ls ifconfig.me)"
 sudo apt-get update
 
@@ -19,7 +20,7 @@ if [ -f "$conf_file" ]; then
 else
 	sudo touch /etc/wireguard/wg0.conf_file
     sudo apt-get install -y wireguard
-    sudo chown 1003:1003 /etc/wireguard/wg0.conf
+    sudo chown ${User_ID}:${GID} /etc/wireguard/wg0.conf
 fi
 
 cd /etc/wireguard 
@@ -46,14 +47,15 @@ EOF
 #Sed script to replace string w/ variable
 sudo sed -i "s/a_private_key/$private_key/g" /etc/wireguard/wg0.conf
 
-read -p "${BRed}Do you want to bring up the WireGuard tunnel? (yes/no)${NC}" ANSWER
+echo -e "${BGreen}Do you want to bring up the WireGuard tunnel? (yes/no)${NC}"
+read -p ANSWER
 if [ $ANSWER == "yes" ]; then
     sudo wg-quick up wg0
 else
 	echo "Not starting Wireguard"
 fi
 
-echo -e "${BRed}Do you want to enable UFW firewall now? (yes/no)${NC}"
+echo -e "${BGreen}Do you want to enable UFW firewall now? (yes/no)${NC}"
 read ANSWER
 if [ $ANSWER == "yes" ]; then
     sudo ufw allow 22/tcp

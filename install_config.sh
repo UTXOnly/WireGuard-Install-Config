@@ -59,7 +59,7 @@ sudo chmod 755 /etc/wireguard/wg0.conf
 sudo chown 1003:1003 /etc/wireguard/wg0.conf
 
 #Quick enable wg0 interface
-echo -e "${BRed}Do you want to bring up the WireGuard tunnel? (yes/no)${NC}"
+echo -e "${BGreen}Do you want to bring up the WireGuard tunnel? (yes/no)${NC}"
 read ANSWER
 if [ $ANSWER == "yes" ]; then
     wg-quick up wg0
@@ -70,7 +70,7 @@ fi
 
 sudo apt install ufw
 #Adjust firewall to allow SSH and wireguardVPN traffic
-echo -e "${BRed}Do you want to enable UFW firewall now? (yes/no)${NC}"
+echo -e "${BGreen}Do you want to enable UFW firewall now? (yes/no)${NC}"
 read ANSWER
 if [ $ANSWER == "yes" ]; then
     sudo ufw allow 22/tcp
@@ -84,4 +84,4 @@ fi
 #Create variable for host's public IP
 public_ip_address="$(curl -Ls ifconfig.me)"
 
-echo -e "${BRed}Your public IP is: ${BGreen}$public_ip_address ${BRed}please save this to run with the add_pub_key.sh script${NC}"
+echo -e "${BGreen}Your public IP is: ${BRed}$public_ip_address ${BGreen}please save this to run with the add_pub_key.sh script${NC}"
