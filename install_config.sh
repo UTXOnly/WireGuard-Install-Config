@@ -73,7 +73,10 @@ sudo apt install ufw
 echo -e "${BRed}Do you want to enable UFW firewall now? (yes/no)${NC}"
 read ANSWER
 if [ $ANSWER == "yes" ]; then
-    exec ./firewall_rules.sh
+    sudo ufw allow 22/tcp
+    sudo ufw allow 22/udp
+    sudo ufw allow 51820/udp
+    sudo ufw enable
 else
 	echo "Not starting UFW firewall"
 fi
