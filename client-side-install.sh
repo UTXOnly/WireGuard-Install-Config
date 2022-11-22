@@ -68,4 +68,4 @@ else
 	echo "Not starting UFW firewall"
 fi
 
-echo "${BGreen}Install finished${NC}"
+echo -e "${BGreen}Install finished${NC}"
