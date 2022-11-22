@@ -18,9 +18,9 @@ conf_file=/etc/wireguard/wg0.conf
 if [ -f "$conf_file" ]; then
     echo "$conf_file exists"
 else
-	sudo apt-get install -y wireguard
+	sudo apt install -y wireguard
     wait
-    sudo touch /etc/wireguard/wg0.conf_file
+    sudo touch /etc/wireguard/wg0.conf
 fi
 sudo chown ${User_ID}:${GID} /etc/wireguard/wg0.conf
 sudo chmod 757 /etc/wireguard
@@ -45,7 +45,7 @@ AllowedIPs = 0.0.0.0/0 # Forward all traffic to server
 EOF
 
 #Sed script to replace string w/ variable
-sudo sed -i "s/a_private_key/$private_key/g" /etc/wireguard/wg0.conf
+sudo sed "s/a_private_key/$private_key/g" -i /etc/wireguard/wg0.conf
 
 sudo chmod 755 /etc/wireguard/wg0.conf
 
