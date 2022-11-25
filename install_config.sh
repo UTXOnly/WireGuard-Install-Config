@@ -1,8 +1,7 @@
 #!/bin/bash
 
 USERNAME=wireguardsvc
-User_ID=$(id -u $USERNAME)
-GID=$(id -g $USERNAME)
+
 BRed='\033[1;31m'
 BGreen='\033[1;32m'
 NC='\033[0m' # No Color
@@ -11,6 +10,8 @@ NC='\033[0m' # No Color
 #sudo useradd -m -u $User_ID -g $GID -o -d /home/$USERNAME -s /#usr/sbin/nologin $USERNAME && \
 #echo "$USERNAME    ALL=(ALL:ALL) NOPASSWD: ALL"| sudo tee -a /
 sudo useradd -r $USERNAME -s /usr/sbin/nologin
+User_ID=$(id -u $USERNAME)
+GID=$(id -g $USERNAME)
 
 #Enable IPv4 forwarding load new settings
 sudo sed '/net.ipv4.ip_forward=1/s/^#//' -i /etc/sysctl.conf
