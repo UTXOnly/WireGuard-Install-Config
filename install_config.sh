@@ -1,15 +1,16 @@
 #!/bin/bash
 
-GID=1003
-User_ID=1003
-USERNAME=wireguard
+USERNAME=wireguardsvc
+User_ID=$(id -u $USERNAME)
+GID=$(id -g $USERNAME)
 BRed='\033[1;31m'
 BGreen='\033[1;32m'
 NC='\033[0m' # No Color
 
-sudo groupadd -g $GID -o $USERNAME && \
-sudo useradd -m -u $User_ID -g $GID -o -d /home/$USERNAME -s /bin/bash $USERNAME && \
-echo "$USERNAME    ALL=(ALL:ALL) NOPASSWD: ALL"| sudo tee -a /usr/sbin/nologin
+#sudo groupadd -g $GID -o $USERNAME && \
+#sudo useradd -m -u $User_ID -g $GID -o -d /home/$USERNAME -s /#usr/sbin/nologin $USERNAME && \
+#echo "$USERNAME    ALL=(ALL:ALL) NOPASSWD: ALL"| sudo tee -a /
+sudo useradd -r $USERNAME -s /usr/sbin/nologin
 
 #Enable IPv4 forwarding load new settings
 sudo sed '/net.ipv4.ip_forward=1/s/^#//' -i /etc/sysctl.conf
