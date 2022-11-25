@@ -10,10 +10,10 @@ if [ $ANSWER1 == 1 ] ; then
     sudo sed -i "s/WG_server_pubkey/$WG_server_pubkey/g" /etc/wireguard/wg0.conf
     echo "Added key and IP"
 elif [ $ANSWER1 == 2 ] ; then
-        read -p "Please enter client public key then press ENTER" WG_client_pub_key
-        echo ""
-        sudo echo "PublicKey = $client_pub_key"  >> /etc/wireguard/wg0.conf
-        echo "Added client pub key"
+    read -p "Please enter client public key then press ENTER" WG_client_pub_key
+    echo ""
+    sudo echo "PublicKey = $WG_client_pub_key" >> /etc/wireguard/wg0.conf
+    echo "Added client pub key"
 else
     echo "That was not a valid selection, please run script again"
 fi
