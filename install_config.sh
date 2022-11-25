@@ -45,8 +45,9 @@ public_key=$(< publickey)
 #Populate wg0.conf w/ config and firewall rules to masquerade client traffic from server
 
 conf_file=/etc/wireguard/wg0.conf
-sudo chmod 777 /etc/wireguard/wg0.conf
-sudo tee -a >${conf_file} <<EOF
+#sudo chmod 777 /etc/wireguard/wg0.conf
+#sudo tee -a >${conf_file} 
+conf_test = <<EOF
 [Interface]
 PrivateKey = a_private_key
 Address = 10.0.0.0/24
@@ -57,6 +58,8 @@ PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING 
 AllowedIPS = 10.0.0.0/24
 PersistentKeepalive = 25
 EOF
+sudo -c "echo $conf_test > ${conf_file}"
+
 
 #Sed script to replace string w/ variable
 sudo sed "s|a_private_key|$private_key|g" -i /etc/wireguard/wg0.conf
@@ -86,11 +89,3 @@ public_ip_address="$(curl -Ls ifconfig.me)"
 
 echo -e "\n${BGreen}Your public IP is: ${BRed}$public_ip_address ${BGreen}please save this to run with the add_pub_key.sh script${NC}"
 echo -e "${BGreen}Your Wireguard server public key is:\n${BRed}${public_key}\nYou will need to save this to run the add_pub_key.sh script${NC}"
-echo ""
-echo -e "${BGreen}Do you want to run the add_pub_key script now?\nType (yes | no) and press ENTER: ${NC}"
-read ANSWER2
-if [ $ANSWER2 == yes ]; then
-    source add_pub_key.sh
-else
-    echo "You will need to run bash script later"
-fi
