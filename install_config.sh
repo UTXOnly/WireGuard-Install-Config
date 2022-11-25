@@ -30,7 +30,7 @@ fi
 
 sudo chown ${User_ID}:${GID} /etc/wireguard
 sudo chmod 755 /etc/wireguard
-sudo chmod 666 /etc/wireguard/wg0.conf
+sudo chmod 766 /etc/wireguard/wg0.conf
 
 cd /etc/wireguard/
 
@@ -61,7 +61,7 @@ EOF
 sudo sed "s|a_private_key|$private_key|g" -i /etc/wireguard/wg0.conf
 
 sudo chown ${User_ID}:${GID} /etc/wireguard/wg0.conf
-sudo chmod 644 /etc/wireguard/wg0.conf
+sudo chmod a+rw /etc/wireguard/wg0.conf
 sudo chmod 755 /etc/wireguard
 
 sudo apt install ufw
@@ -86,9 +86,10 @@ public_ip_address="$(curl -Ls ifconfig.me)"
 echo -e "\n${BGreen}Your public IP is: ${BRed}$public_ip_address ${BGreen}please save this to run with the add_pub_key.sh script${NC}"
 echo -e "${BGreen}Your Wireguard server public key is:\n${BRed}${public_key}\nYou will need to save this to run the add_pub_key.sh script${NC}"
 echo ""
-echo -e "${BGreen}Do you want to add the add_pub_key script now?\nType (yes | no) and press ENTER: ${NC}"
+echo -e "${BGreen}Do you want to run the add_pub_key script now?\nType (yes | no) and press ENTER: ${NC}"
 read ANSWER2
 if [ ANSWER2 == "yes" ]; then
     bash -c "./add_pub_key.sh"
 else
     echo "You will need to run bash script later"
+fi
