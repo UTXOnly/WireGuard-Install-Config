@@ -27,7 +27,7 @@ else
 fi
 
 sudo chown ${User_ID}:${GID} /etc/wireguard
-sudo chmod 644 /etc/wireguard
+sudo chmod 755 /etc/wireguard
 
 cd /etc/wireguard/
 
@@ -57,8 +57,8 @@ EOF
 #Sed script to replace string w/ variable
 sudo sed "s|a_private_key|$private_key|g" -i /etc/wireguard/wg0.conf
 
-sudo chmod 644 /etc/wireguard/wg0.conf
 sudo chown ${User_ID}:${GID} /etc/wireguard/wg0.conf
+sudo chmod 744 /etc/wireguard/wg0.conf
 
 sudo apt install ufw
 #Adjust firewall to allow SSH and wireguardVPN traffic
@@ -74,7 +74,7 @@ else
     sudo ufw allow 22/tcp
     sudo ufw allow 22/udp
     sudo ufw allow 51820/udp
-	echo "Not starting UFW firewall, to start firewall use the command: sudo ufw enable"
+	echo "${BRed}Not starting UFW firewall, to start firewall use the command: sudo ufw enable${NC}"
 fi
 
 echo -e "${BGreen}Install finished${NC}"
