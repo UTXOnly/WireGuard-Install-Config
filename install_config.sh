@@ -59,7 +59,7 @@ AllowedIPS = 10.0.0.0/24
 PersistentKeepalive = 25
 EOF
 )
-echo ${conf_test} > ${conf_file}"
+echo ${conf_test} > ${conf_file}
 
 
 #Sed script to replace string w/ variable
