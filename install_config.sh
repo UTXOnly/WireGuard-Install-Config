@@ -60,7 +60,7 @@ EOF
 sudo sed "s|a_private_key|$private_key|g" -i /etc/wireguard/wg0.conf
 
 sudo chown ${User_ID}:${GID} /etc/wireguard/wg0.conf
-sudo chmod 755 /etc/wireguard/wg0.conf
+sudo chmod 644 /etc/wireguard/wg0.conf
 sudo chmod 755 /etc/wireguard
 
 sudo apt install ufw
