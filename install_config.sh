@@ -29,7 +29,7 @@ else
 fi
 
 sudo chown ${User_ID}:${GID} /etc/wireguard
-sudo chmod 755 /etc/wireguard
+#sudo chmod 755 /etc/wireguard
 
 
 cd /etc/wireguard/
