@@ -47,7 +47,7 @@ public_key=$(< publickey)
 conf_file=/etc/wireguard/wg0.conf
 #sudo chmod 777 /etc/wireguard/wg0.conf
 #sudo tee -a >${conf_file} 
-conf_test = "
+conf_test=$(cat << EOF
 [Interface]
 PrivateKey = a_private_key
 Address = 10.0.0.0/24
@@ -57,7 +57,7 @@ PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING 
 [Peer]
 AllowedIPS = 10.0.0.0/24
 PersistentKeepalive = 25
-"
+EOF
 sudo "echo ${conf_test} > ${conf_file}"
 
 
