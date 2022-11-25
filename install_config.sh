@@ -29,7 +29,7 @@ else
 fi
 
 sudo chown ${User_ID}:${GID} /etc/wireguard
-sudo chmod 777 /etc/wireguard
+sudo chmod 755 /etc/wireguard
 
 cd /etc/wireguard/
 
@@ -42,7 +42,7 @@ private_key=$(< privatekey)
 public_key=$(< publickey)
 
 #Populate wg0.conf w/ config and firewall rules to masquerade client traffic from server
-sudo chmod 777 /etc/wireguard/wg0.conf
+sudo chmod 666 /etc/wireguard/wg0.conf
 conf_file=/etc/wireguard/wg0.conf
 sudo tee -a >${conf_file} <<EOF
 [Interface]
