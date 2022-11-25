@@ -90,7 +90,7 @@ echo ""
 echo -e "${BGreen}Do you want to run the add_pub_key script now?\nType (yes | no) and press ENTER: ${NC}"
 read ANSWER2
 if [ $ANSWER2 == yes ]; then
-    bash -c "./add_pub_key.sh"
+    source add_pub_key.sh
 else
     echo "You will need to run bash script later"
 fi

@@ -7,9 +7,9 @@ BRed='\033[1;31m'
 BGreen='\033[1;32m'
 NC='\033[0m' # No Color
 
-sudo groupadd -g $GID -o $USERNAME && \
-sudo useradd -m -u $User_ID -g $GID -o -d /home/$USERNAME -s /bin/bash $USERNAME && \
-echo "$USERNAME    ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee -a /etc/sudoers
+sudo useradd -r $USERNAME -s /usr/sbin/nologin
+User_ID=$(id -u $USERNAME)
+GID=$(id -g $USERNAME)
 
 sudo apt-get update -y
 
