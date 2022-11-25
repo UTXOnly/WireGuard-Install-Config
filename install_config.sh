@@ -27,7 +27,7 @@ else
 fi
 
 sudo chown ${User_ID}:${GID} /etc/wireguard
-sudo chmod 757 /etc/wireguard
+sudo chmod 644 /etc/wireguard
 
 cd /etc/wireguard/
 
@@ -57,7 +57,7 @@ EOF
 #Sed script to replace string w/ variable
 sudo sed "s|a_private_key|$private_key|g" -i /etc/wireguard/wg0.conf
 
-sudo chmod 755 /etc/wireguard/wg0.conf
+sudo chmod 644 /etc/wireguard/wg0.conf
 sudo chown ${User_ID}:${GID} /etc/wireguard/wg0.conf
 
 sudo apt install ufw
@@ -71,12 +71,15 @@ if [ $ANSWER == "yes" ]; then
     sudo ufw allow 51820/udp
     sudo ufw enable
 else
-	echo "Not starting UFW firewall"
+    sudo ufw allow 22/tcp
+    sudo ufw allow 22/udp
+    sudo ufw allow 51820/udp
+	echo "Not starting UFW firewall, to start firewall use the command: sudo ufw enable"
 fi
 
 echo -e "${BGreen}Install finished${NC}"
 #Create variable for host's public IP
 public_ip_address="$(curl -Ls ifconfig.me)"
 
-echo -e "${BGreen}Your public IP is: ${BRed}$public_ip_address ${BGreen}please save this to run with the add_pub_key.sh script${NC}"
-echo -e "${BGreen} Your Wireguard client public key is:\n${BRed} ${public_key} \n You will need to save this to run the add_pub_key.sh script${NC}"
+echo -e "\n${BGreen}Your public IP is: ${BRed}$public_ip_address ${BGreen}please save this to run with the add_pub_key.sh script${NC}"
+echo -e "${BGreen}Your Wireguard client public key is:\n${BRed}${public_key}\nYou will need to save this to run the add_pub_key.sh script${NC}"
