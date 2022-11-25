@@ -27,7 +27,7 @@ else
 fi
 
 sudo chown ${User_ID}:${GID} /etc/wireguard
-sudo chmod 755 /etc/wireguard
+sudo chmod 777 /etc/wireguard
 
 cd /etc/wireguard/
 
@@ -59,6 +59,7 @@ sudo sed "s|a_private_key|$private_key|g" -i /etc/wireguard/wg0.conf
 
 sudo chown ${User_ID}:${GID} /etc/wireguard/wg0.conf
 sudo chmod 755 /etc/wireguard/wg0.conf
+sudo chmod 755 /etc/wireguard
 
 sudo apt install ufw
 #Adjust firewall to allow SSH and wireguardVPN traffic
