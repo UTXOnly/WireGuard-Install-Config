@@ -58,7 +58,7 @@ PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING 
 AllowedIPS = 10.0.0.0/24
 PersistentKeepalive = 25
 EOF
-sudo -c "echo $conf_test > ${conf_file}"
+sudo "echo $conf_test > ${conf_file}"
 
 
 #Sed script to replace string w/ variable
