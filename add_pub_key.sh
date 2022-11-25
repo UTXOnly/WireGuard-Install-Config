@@ -1,6 +1,10 @@
 #!/bin/bash
 
-echo -e "Would you like to:\n \n 1) Add server public key and IP address to client configuration? \n OR \n 2) Add client public key to server configuration? \n Please enter 1 or 2 and press ENTER" 
+BRed='\033[1;31m'
+BGreen='\033[1;32m'
+NC='\033[0m' # No Color
+
+echo -e "Would you like to:\n \n${BGreen} 1) Add server public key and IP address to client configuration${NC}? \n \n OR \n \n${BGreen}2) Add client public key to server configuration?${NC} \n Please enter 1 or 2 and press ENTER\n" 
 read ANSWER1
 if [ $ANSWER1 == 1 ] ; then
     read -p "Please enter server public key then press ENTER: " WG_server_pub_key
