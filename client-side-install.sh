@@ -10,7 +10,7 @@ NC='\033[0m' # No Color
 sudo groupadd -g $GID -o $USERNAME && \
 sudo useradd -m -u $User_ID -g $GID -o -d /home/$USERNAME -s /bin/bash $USERNAME && \
 echo "$USERNAME    ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee -a /etc/sudoers
-#client_ip_address="$(curl -Ls ifconfig.me)"
+
 sudo apt-get update -y
 
 #If file does not exisit, create it

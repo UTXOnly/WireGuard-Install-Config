@@ -11,8 +11,8 @@ if [ $ANSWER1 == 1 ] ; then
     read WG_server_pub_key
     echo ""
     read -p "Please enter server public IP then press ENTER: " WG_server_ip
-    sudo sed "s/server_ip/$WG_server_ip/g" -i /etc/wireguard/wg0.conf
-    sudo sed "s/WG_server_pubkey/$WG_server_pub_key/g" -i /etc/wireguard/wg0.conf
+    sudo sed "s|server_ip|$WG_server_ip|g" -i /etc/wireguard/wg0.conf
+    sudo sed "s|WG_server_pubkey|$WG_server_pub_key|g" -i /etc/wireguard/wg0.conf
     echo -e "${BGreen}Added key and IP${NC}"
 elif [ $ANSWER1 == 2 ] ; then
     echo -e "\nPlease enter client public key then press ENTER\n"
