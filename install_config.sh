@@ -62,7 +62,7 @@ sudo chown ${User_ID}:${GID} /etc/wireguard/wg0.conf
 
 sudo apt install ufw
 #Adjust firewall to allow SSH and wireguardVPN traffic
-echo -e "${BGreen}Do you want to enable UFW firewall now? ${BRed}WARNING this host will only be able accessable on Port 22 (SSH) or Port 8152/udp (Wireguard) \nIf you do not know what this means select NO and find out! \n (yes/no)${NC}"
+echo -e "${BGreen}Do you want to enable UFW firewall now?\n${BRed}WARNING this host will only be able accessable on Port 22 (SSH) or Port 8152/udp (Wireguard) \nIf you do not know what this means select NO and find out! \n (yes/no)${NC}"
 
 read ANSWER
 if [ $ANSWER == "yes" ]; then

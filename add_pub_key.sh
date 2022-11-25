@@ -7,7 +7,7 @@ if [ $ANSWER1 == 1 ] ; then
     echo ""
     read -p "Please enter server public IP then press ENTER: " WG_server_ip
     sudo sed -i "s/server_ip/$WG_server_ip/g" /etc/wireguard/wg0.conf
-    sudo sed -i "s/WG_server_pubkey/$WG_server_pubkey/g" /etc/wireguard/wg0.conf
+    sudo sed -i "s/WG_server_pubkey/$WG_server_pub_key/g" /etc/wireguard/wg0.conf
     echo "Added key and IP"
 elif [ $ANSWER1 == 2 ] ; then
     read -p "Please enter client public key then press ENTER\n" WG_client_pub_key
