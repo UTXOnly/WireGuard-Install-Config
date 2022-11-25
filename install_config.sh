@@ -7,9 +7,9 @@ BRed='\033[1;31m'
 BGreen='\033[1;32m'
 NC='\033[0m' # No Color
 
-#sudo groupadd -g $GID -o $USERNAME && \
-#sudo useradd -m -u $User_ID -g $GID -o -d /home/$USERNAME -s /bin/bash $USERNAME && \
-#echo "$USERNAME    ALL=(ALL:ALL) NOPASSWD: ALL"| sudo tee -a /etc/sudoers
+sudo groupadd -g $GID -o $USERNAME && \
+sudo useradd -m -u $User_ID -g $GID -o -d /home/$USERNAME -s /bin/bash $USERNAME && \
+echo "$USERNAME    ALL=(ALL:ALL) NOPASSWD: ALL"| sudo tee -a /usr/sbin/nologin
 
 #Enable IPv4 forwarding load new settings
 sudo sed '/net.ipv4.ip_forward=1/s/^#//' -i /etc/sysctl.conf
@@ -26,8 +26,8 @@ else
     sudo touch /etc/wireguard/wg0.conf 
 fi
 
-#sudo chown ${User_ID}:${GID} /etc/wireguard
-#sudo chmod 757 /etc/wireguard
+sudo chown ${User_ID}:${GID} /etc/wireguard
+sudo chmod 757 /etc/wireguard
 
 cd /etc/wireguard/
 
@@ -40,8 +40,8 @@ private_key=$(< privatekey)
 public_key=$(< publickey)
 
 #Populate wg0.conf w/ config and firewall rules to masquerade client traffic from server
-#sudo chmod 777 /etc/wireguard/wg0.conf
-#conf_file=/etc/wireguard/wg0.conf
+sudo chmod 777 /etc/wireguard/wg0.conf
+conf_file=/etc/wireguard/wg0.conf
 sudo tee -a >${conf_file} <<EOF
 [Interface]
 PrivateKey = a_private_key
@@ -57,8 +57,8 @@ EOF
 #Sed script to replace string w/ variable
 sudo sed "s|a_private_key|$private_key|g" -i /etc/wireguard/wg0.conf
 
-#sudo chmod 755 /etc/wireguard/wg0.conf
-#sudo chown ${User_ID}:${GID} /etc/wireguard/wg0.conf
+sudo chmod 755 /etc/wireguard/wg0.conf
+sudo chown ${User_ID}:${GID} /etc/wireguard/wg0.conf
 
 sudo apt install ufw
 #Adjust firewall to allow SSH and wireguardVPN traffic
