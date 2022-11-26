@@ -35,13 +35,14 @@ sudo chmod 777 /etc/wireguard/wg0.conf
 tee >${conf_file} << EOF
 [Interface]
 PrivateKey = a_private_key
-Address=10.0.0.4
+Address= 10.0.0.4/24
+DNS = 8.8.8.8
 
 [Peer]
 PublicKey = WG_server_pubkey
 Endpoint = server_ip:51820
-AllowedIPs = 0.0.0.0/0 # Forward all traffic to server
-
+AllowedIPs = 0.0.0.0/0
+PersistentKeepalive = 25
 EOF
 
 #Sed script to replace string w/ variable
