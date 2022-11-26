@@ -42,7 +42,7 @@ sudo chmod 777 /etc/wireguard/wg0.conf
 tee -a >${conf_file} << EOF
 [Interface]
 PrivateKey = a_private_key
-Address = 10.0.0.0/24
+Address = 10.0.0.1/24
 ListenPort = 51820
 PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE

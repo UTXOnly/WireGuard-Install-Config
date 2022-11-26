@@ -20,7 +20,7 @@ else
     wait
     sudo touch /etc/wireguard/wg0.conf
 fi
-#sudo chown ${User_ID}:${GID} /etc/wireguard/wg0.conf
+sudo chown ${User_ID}:${GID} /etc/wireguard
 sudo chmod 757 /etc/wireguard
 cd /etc/wireguard 
 
