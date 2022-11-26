@@ -35,7 +35,7 @@ sudo chmod 777 /etc/wireguard/wg0.conf
 tee >${conf_file} << EOF
 [Interface]
 PrivateKey = a_private_key
-Address= 10.0.0.4/24
+Address= 10.0.0.4/32
 DNS = 8.8.8.8
 
 [Peer]
