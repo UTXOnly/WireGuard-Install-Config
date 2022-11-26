@@ -1,5 +1,4 @@
 #!/bin/bash
-
 USERNAME=wireguardsvc
 BRed='\033[1;31m'
 BGreen='\033[1;32m'
@@ -27,12 +26,10 @@ fi
 sudo chown ${User_ID}:${GID} /etc/wireguard
 sudo chmod 777 /etc/wireguard
 
-
 cd /etc/wireguard/
 
 #Generate public/private keypair 
 umask 077; wg genkey | tee privatekey | wg pubkey > publickey
-
 
 #Create variable for private key
 private_key=$(< privatekey)
@@ -42,7 +39,7 @@ public_key=$(< publickey)
 
 conf_file=/etc/wireguard/wg0.conf
 sudo chmod 777 /etc/wireguard/wg0.conf
-sudo tee -a >${conf_file} << EOF
+tee -a >${conf_file} << EOF
 [Interface]
 PrivateKey = a_private_key
 Address = 10.0.0.0/24
@@ -53,8 +50,6 @@ PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING 
 AllowedIPS = 10.0.0.0/24
 PersistentKeepalive = 25
 EOF
-
-
 
 #Sed script to replace string w/ variable
 sudo sed "s|a_private_key|$private_key|g" -i /etc/wireguard/wg0.conf

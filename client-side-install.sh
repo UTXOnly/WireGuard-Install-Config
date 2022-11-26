@@ -1,8 +1,6 @@
 #!/bin/bash
 
-GID=1003
-User_ID=1003
-USERNAME=wireguard
+USERNAME=wireguardsvc
 BRed='\033[1;31m'
 BGreen='\033[1;32m'
 NC='\033[0m' # No Color
@@ -22,12 +20,11 @@ else
     wait
     sudo touch /etc/wireguard/wg0.conf
 fi
-sudo chown ${User_ID}:${GID} /etc/wireguard/wg0.conf
+#sudo chown ${User_ID}:${GID} /etc/wireguard/wg0.conf
 sudo chmod 757 /etc/wireguard
 cd /etc/wireguard 
 
 umask 077; wg genkey | tee privatekey | wg pubkey > publickey
-
 
 #Create variable for private key
 private_key=$(< privatekey)
@@ -48,7 +45,9 @@ EOF
 #Sed script to replace string w/ variable
 sudo sed "s|a_private_key|$private_key|g" -i /etc/wireguard/wg0.conf
 
-sudo chmod 755 /etc/wireguard/wg0.conf
+sudo chown ${User_ID}:${GID} /etc/wireguard/wg0.conf
+sudo chmod 644 /etc/wireguard/wg0.conf
+sudo chmod 755 /etc/wireguard
 
 echo -e "${BGreen}Install finished${NC}"
 echo -e "${BGreen} Your Wireguard client public key is:\n${BRed} ${public_key} \n You will need to save this to run the add_pub_key.sh script${NC}"
