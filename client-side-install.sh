@@ -50,4 +50,4 @@ sudo chmod 644 /etc/wireguard/wg0.conf
 sudo chmod 755 /etc/wireguard
 
 echo -e "${BGreen}Install finished${NC}"
-echo -e "${BGreen} Your Wireguard client public key is:\n${BRed} ${public_key} \n You will need to save this to run the add_pub_key.sh script${NC}"
+echo -e "${BGreen} Your Wireguard client public key is:\n${BRed}${public_key} \n You will need to save this to run the add_pub_key.sh script${NC}"
