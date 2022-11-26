@@ -10,6 +10,7 @@ User_ID=$(id -u $USERNAME)
 GID=$(id -g $USERNAME)
 
 sudo apt-get update -y
+sudo apt install resolvconf -y
 
 #If file does not exisit, create it
 conf_file=/etc/wireguard/wg0.conf
@@ -39,8 +40,8 @@ Address=10.0.0.4
 [Peer]
 PublicKey=WG_server_pubkey
 Endpoint=server_ip:51820
-#AllowedIPs = 0.0.0.0/0 # Forward all traffic to server
-AllowedIPs = 10.0.0.1/24
+AllowedIPs = 0.0.0.0/0 # Forward all traffic to server
+
 EOF
 
 #Sed script to replace string w/ variable
