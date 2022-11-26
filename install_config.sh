@@ -47,7 +47,7 @@ ListenPort = 51820
 PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
 [Peer]
-AllowedIPS = 10.0.0.0/24
+AllowedIPS = 10.0.0.4/24
 PersistentKeepalive = 25
 EOF
 
