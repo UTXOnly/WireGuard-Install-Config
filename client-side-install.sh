@@ -39,7 +39,8 @@ Address=10.0.0.4
 [Peer]
 PublicKey=WG_server_pubkey
 Endpoint=server_ip:51820
-AllowedIPs = 0.0.0.0/0 # Forward all traffic to server
+#AllowedIPs = 0.0.0.0/0 # Forward all traffic to server
+AllowedIPs = 10.0.0.1/24
 EOF
 
 #Sed script to replace string w/ variable
