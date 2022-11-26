@@ -1,14 +1,10 @@
 #!/bin/bash
 
 USERNAME=wireguardsvc
-
 BRed='\033[1;31m'
 BGreen='\033[1;32m'
 NC='\033[0m' # No Color
 
-#sudo groupadd -g $GID -o $USERNAME && \
-#sudo useradd -m -u $User_ID -g $GID -o -d /home/$USERNAME -s /#usr/sbin/nologin $USERNAME && \
-#echo "$USERNAME    ALL=(ALL:ALL) NOPASSWD: ALL"| sudo tee -a /
 sudo useradd -r $USERNAME -s /usr/sbin/nologin
 User_ID=$(id -u $USERNAME)
 GID=$(id -g $USERNAME)
@@ -45,9 +41,8 @@ public_key=$(< publickey)
 #Populate wg0.conf w/ config and firewall rules to masquerade client traffic from server
 
 conf_file=/etc/wireguard/wg0.conf
-#sudo chmod 777 /etc/wireguard/wg0.conf
-#sudo tee -a >${conf_file} 
-conf_test=$(cat << EOF
+sudo chmod 777 /etc/wireguard/wg0.conf
+sudo tee -a >${conf_file} << EOF
 [Interface]
 PrivateKey = a_private_key
 Address = 10.0.0.0/24
@@ -58,8 +53,7 @@ PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING 
 AllowedIPS = 10.0.0.0/24
 PersistentKeepalive = 25
 EOF
-)
-echo ${conf_test} > ${conf_file}
+
 
 
 #Sed script to replace string w/ variable
