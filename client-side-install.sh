@@ -38,8 +38,8 @@ PrivateKey = a_private_key
 Address=10.0.0.4
 
 [Peer]
-PublicKey=WG_server_pubkey
-Endpoint=server_ip:51820
+PublicKey = WG_server_pubkey
+Endpoint = server_ip:51820
 AllowedIPs = 0.0.0.0/0 # Forward all traffic to server
 
 EOF
