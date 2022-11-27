@@ -10,7 +10,7 @@ User_ID=$(id -u $USERNAME)
 GID=$(id -g $USERNAME)
 
 sudo apt-get update -y
-sudo apt install resolvconf -y
+#sudo apt install resolvconf -y
 
 #If file does not exisit, create it
 conf_file=/etc/wireguard/wg0.conf
