@@ -48,6 +48,9 @@ EOF
 #Sed script to replace string w/ variable
 sudo sed "s|a_private_key|$private_key|g" -i /etc/wireguard/wg0.conf
 
+#Command to run Wireguard as a service and enable on system startup
+sudo systemctl enable wg-quick@wg0
+
 sudo chown ${User_ID}:${GID} /etc/wireguard/wg0.conf
 sudo chmod 644 /etc/wireguard/wg0.conf
 sudo chmod 755 /etc/wireguard
