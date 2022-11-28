@@ -11,18 +11,22 @@ if [ -f "$conf_file" ]; then
 else
 	sudo apt install -y wireguard
     wait
+    sudo chown $USER:$USER /etc/wireguard
+    sudo chmod 700 /etc/wireguard
 fi
+
+cd /etc/wireguard
 
 
 umask 077; wg genkey | tee privatekey | wg pubkey > publickey
 
-private_key=$(< privatekey)
-public_key=$(< publickey)
+#private_key=$(< privatekey)
+#public_key=$(< publickey)
 
 #sudo wg set wg0 peer $public_key allowed-ips 10.0.0.1/32
 
-sudo chown $USER:$USER /etc/wireguard
-sudo chmod 700 /etc/wireguard
+#sudo chown $USER:$USER /etc/wireguard
+#sudo chmod 700 /etc/wireguard
 #sudo chown ${UID}:${GID} /etc/wireguard/wg0.conf
 #sudo chmod 700 /etc/wireguard/wg0.conf
 #sudo chmod 755 /etc/wireguard
